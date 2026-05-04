@@ -23,6 +23,7 @@ Page({
         this.setData({
           phone: data.phone || this.data.phone,
           address: data.address || this.data.address,
+          email: data.email || this.data.email,
           wechatQr: data.wechat_qr || ''
         })
       })
