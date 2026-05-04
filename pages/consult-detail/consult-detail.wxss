@@ -129,42 +129,40 @@
 
 .input-tools {
   display: flex;
-  gap: 10rpx;
-  margin-right: 12rpx;
+  flex-direction: column;
+  gap: 8rpx;
+  margin-left: 12rpx;
+  align-items: center;
 }
 
 .tool-btn {
-  font-size: 40rpx;
+  font-size: 36rpx;
+  display: block;
+  text-align: center;
 }
 
 .chat-input {
   flex: 1;
-  height: 72rpx;
+  min-height: 80rpx;
+  max-height: 240rpx;
   background: #f5f7fa;
-  border-radius: 36rpx;
-  padding: 0 20rpx;
+  border-radius: 16rpx;
+  padding: 16rpx 20rpx;
   font-size: 28rpx;
+  line-height: 1.6;
 }
 
 .send-btn {
-  flex-shrink: 0;
-  margin-left: 16rpx;
-  padding: 0 24rpx;
+  width: 80rpx;
+  height: 80rpx;
   background: #4d6bfe;
   color: #ffffff;
-  font-size: 28rpx;
-  border-radius: 36rpx;
-  border: none;
-  height: 72rpx;
+  font-size: 40rpx;
+  border-radius: 16rpx;
   display: flex;
   align-items: center;
   justify-content: center;
-  min-width: 100rpx;
   line-height: 1;
-}
-
-.send-btn::after {
-  border: none;
 }
 
 .loading-state {

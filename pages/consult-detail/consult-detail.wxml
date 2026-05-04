@@ -37,11 +37,11 @@
 
   <!-- 输入区 -->
   <view wx:if="{{!consultation || consultation.status !== 'closed'}}" class="input-bar safe-bottom">
+    <textarea class="chat-input" placeholder="输入消息..." value="{{inputContent}}" bindinput="onInput" auto-height maxlength="6000" confirm-type="send" bindconfirm="sendMessage" />
     <view class="input-tools">
       <text class="tool-btn" bindtap="chooseImage">📷</text>
       <text class="tool-btn" bindtap="chooseFile">📎</text>
+      <text class="send-btn" bindtap="sendMessage">➤</text>
     </view>
-    <input class="chat-input" type="text" placeholder="输入消息..." value="{{inputContent}}" bindinput="onInput" confirm-type="send" bindconfirm="sendMessage" />
-    <button class="send-btn" bindtap="sendMessage">发送</button>
   </view>
 </view>
