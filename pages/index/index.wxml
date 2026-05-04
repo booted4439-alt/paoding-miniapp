@@ -16,7 +16,7 @@
       <text class="quick-icon">💬</text>
       <view class="quick-info">
         <text class="quick-title">法律咨询</text>
-        <text class="quick-desc">专业律师为您答疑解惑</text>
+        <text class="quick-desc">全部咨询由专业律师回复</text>
       </view>
       <text class="quick-arrow">›</text>
     </view>
@@ -24,7 +24,7 @@
       <text class="quick-icon">📖</text>
       <view class="quick-info">
         <text class="quick-title">法律知识</text>
-        <text class="quick-desc">查阅法律法规和案例解读</text>
+        <text class="quick-desc">实用的法律知识、法律文档</text>
       </view>
       <text class="quick-arrow">›</text>
     </view>

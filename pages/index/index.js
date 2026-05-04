@@ -24,7 +24,20 @@ Page({
   },
 
   checkLoginStatus() {
-    this.setData({ isLoggedIn: util.isLoggedIn() })
+    if (util.isLoggedIn()) {
+      // 验证 token 是否有效
+      api.getUserProfile()
+        .then(() => {
+          this.setData({ isLoggedIn: true })
+        })
+        .catch(() => {
+          // token 无效，清除登录状态
+          getApp().clearLogin()
+          this.setData({ isLoggedIn: false })
+        })
+    } else {
+      this.setData({ isLoggedIn: false })
+    }
   },
 
   /** 加载站点信息（超时短，失败容忍） */
