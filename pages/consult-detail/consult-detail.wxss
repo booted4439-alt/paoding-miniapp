@@ -149,16 +149,22 @@
 .send-btn {
   flex-shrink: 0;
   margin-left: 16rpx;
-  padding: 12rpx 32rpx;
+  padding: 0 24rpx;
   background: #4d6bfe;
   color: #ffffff;
   font-size: 28rpx;
   border-radius: 36rpx;
   border: none;
+  height: 72rpx;
   display: flex;
   align-items: center;
   justify-content: center;
+  min-width: 100rpx;
   line-height: 1;
+}
+
+.send-btn::after {
+  border: none;
 }
 
 .loading-state {
