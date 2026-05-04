@@ -5,9 +5,9 @@ const api = require('../../utils/api')
 
 Page({
   data: {
-    phone: '021-6888-8888',
-    address: '上海市浦东新区陆家嘴环路1000号',
-    workHours: '周一至周五 9:00 - 18:00',
+    phone: '021-12368',
+    address: '上海市长宁区',
+    workHours: '周一至周日 6:00 - 22:00',
     email: 'contact@paodinglaw.com',
     wechatQr: ''
   },

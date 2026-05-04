@@ -43,4 +43,10 @@
     <text class="login-prompt-text">登录后可发起法律咨询</text>
     <button class="login-prompt-btn" bindtap="goLogin">登录 / 注册</button>
   </view>
+  
+  <!-- 工作时间 -->
+  <view class="work-hours-bar">
+    <text class="work-hours-icon">🕐</text>
+    <text class="work-hours-text">律师工作时间：周一至周日 6:00 - 22:00</text>
+  </view>
 </view>

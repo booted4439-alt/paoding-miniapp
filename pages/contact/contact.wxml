@@ -35,7 +35,7 @@
   </view>
 
   <view class="card">
-    <text class="work-hours-title">工作时间</text>
+    <text class="work-hours-title">律师工作时间</text>
     <text class="work-hours-text">{{workHours}}</text>
   </view>
 
