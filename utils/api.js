@@ -3,7 +3,7 @@
  * 统一管理所有后端接口调用
  */
 
-const API_BASE = 'https://paodinglaw.com'
+const API_BASE = 'https://www.paodinglaw.com'
 
 /**
  * 通用请求封装
