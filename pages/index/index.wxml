@@ -1,0 +1,46 @@
+<!-- 首页 -->
+<view class="page-container">
+  <!-- Banner -->
+  <view class="banner">
+    <text class="banner-title">{{siteName}}</text>
+    <text class="banner-subtitle">AI+律师审核</text>
+    <text class="banner-tip">用户提出咨询后，三小时内由专业律师回复。</text>
+    <view class="banner-actions">
+      <button class="banner-btn" bindtap="goConsult">立即咨询</button>
+    </view>
+  </view>
+
+  <!-- 快捷入口 -->
+  <view class="quick-actions card">
+    <view class="quick-row" bindtap="goConsult">
+      <text class="quick-icon">💬</text>
+      <view class="quick-info">
+        <text class="quick-title">法律咨询</text>
+        <text class="quick-desc">专业律师为您答疑解惑</text>
+      </view>
+      <text class="quick-arrow">›</text>
+    </view>
+    <view class="quick-row" bindtap="goDocuments">
+      <text class="quick-icon">📖</text>
+      <view class="quick-info">
+        <text class="quick-title">法律知识</text>
+        <text class="quick-desc">查阅法律法规和案例解读</text>
+      </view>
+      <text class="quick-arrow">›</text>
+    </view>
+    <view class="quick-row" bindtap="goContact">
+      <text class="quick-icon">📍</text>
+      <view class="quick-info">
+        <text class="quick-title">联系我们</text>
+        <text class="quick-desc">{{sitePhone}} · {{siteAddress}}</text>
+      </view>
+      <text class="quick-arrow">›</text>
+    </view>
+  </view>
+
+  <!-- 未登录提示 -->
+  <view class="login-prompt" wx:if="{{!isLoggedIn}}">
+    <text class="login-prompt-text">登录后可发起法律咨询</text>
+    <button class="login-prompt-btn" bindtap="goLogin">登录 / 注册</button>
+  </view>
+</view>

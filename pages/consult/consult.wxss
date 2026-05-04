@@ -1,0 +1,128 @@
+/* 咨询列表 */
+.consult-page {
+  min-height: 100vh;
+  padding-bottom: 120rpx;
+  padding-bottom: 120rpx;
+}
+
+/* 咨询项 */
+.consult-list {
+  padding: 20rpx 30rpx;
+}
+
+.consult-item {
+  background: #ffffff;
+  border-radius: 16rpx;
+  padding: 28rpx;
+  margin-bottom: 20rpx;
+  box-shadow: 0 2rpx 8rpx rgba(0,0,0,0.04);
+}
+
+.consult-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 12rpx;
+}
+
+.consult-title {
+  font-size: 30rpx;
+  font-weight: 600;
+  color: #333;
+  flex: 1;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  margin-right: 16rpx;
+}
+
+.consult-time {
+  font-size: 24rpx;
+  color: #999;
+  display: block;
+  margin-bottom: 10rpx;
+}
+
+.consult-meta {
+  display: flex;
+  justify-content: space-between;
+}
+
+.consult-lawyer {
+  font-size: 24rpx;
+  color: #7c93ff;
+}
+
+.consult-msg-count {
+  font-size: 24rpx;
+  color: #bbb;
+}
+
+/* 底部栏 */
+.bottom-bar {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  padding: 16rpx 30rpx;
+  background: #ffffff;
+  box-shadow: 0 -4rpx 20rpx rgba(0,0,0,0.06);
+  z-index: 10;
+}
+
+/* 加载更多 */
+.loading-more {
+  text-align: center;
+  padding: 30rpx;
+  color: #999;
+  font-size: 26rpx;
+}
+
+/* 弹窗 */
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0,0,0,0.5);
+  z-index: 100;
+  display: flex;
+  align-items: flex-end;
+}
+
+.modal-content {
+  background: #ffffff;
+  border-radius: 24rpx 24rpx 0 0;
+  padding: 40rpx 30rpx;
+  width: 100%;
+  box-sizing: border-box;
+  max-height: 80vh;
+  overflow-y: auto;
+}
+
+.modal-title {
+  font-size: 36rpx;
+  font-weight: 600;
+  color: #333;
+  display: block;
+  margin-bottom: 30rpx;
+  text-align: center;
+}
+
+.textarea-field {
+  width: 100%;
+  min-height: 200rpx;
+  background: #f5f7fa;
+  border-radius: 12rpx;
+  padding: 20rpx 24rpx;
+  font-size: 28rpx;
+  color: #333;
+  border: 2rpx solid transparent;
+  box-sizing: border-box;
+}
+
+.modal-actions {
+  display: flex;
+  margin-top: 30rpx;
+}

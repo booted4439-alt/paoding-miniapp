@@ -1,0 +1,76 @@
+<!-- 咨询列表 -->
+<view class="consult-page">
+  <!-- 空状态 -->
+  <view class="empty-state" wx:if="{{consultations.length === 0 && !loading}}">
+    <text>暂无咨询记录</text>
+    <text style="font-size:24rpx;color:#999;margin-top:10rpx;">点击下方按钮发起新的法律咨询</text>
+  </view>
+
+  <!-- 咨询列表 -->
+  <view class="consult-list" wx:if="{{consultations.length > 0}}">
+    <view
+      class="consult-item"
+      wx:for="{{consultations}}"
+      wx:key="id"
+      data-id="{{item.id}}"
+      bindtap="goDetail"
+    >
+      <view class="consult-top">
+        <text class="consult-title">{{item.title}}</text>
+        <text class="status-tag status-{{item.status}}">{{getStatusText(item.status)}}</text>
+      </view>
+      <text class="consult-time">{{item.updated_at}}</text>
+      <view class="consult-meta">
+        <text wx:if="{{item.lawyer}}" class="consult-lawyer">律师：{{item.lawyer}}</text>
+        <text class="consult-msg-count">{{item.message_count}} 条消息</text>
+      </view>
+    </view>
+  </view>
+
+  <!-- 加载中 -->
+  <view class="loading-more" wx:if="{{loading}}">
+    <text>加载中...</text>
+  </view>
+
+  <!-- 固定底部按钮 -->
+  <view class="bottom-bar safe-bottom">
+    <button class="btn-primary" style="margin:0;" bindtap="openCreate">发起新咨询</button>
+  </view>
+
+  <!-- 创建咨询弹窗 -->
+  <view class="modal-overlay" wx:if="{{showCreateModal}}" bindtap="closeCreate">
+    <view class="modal-content" catchtap="stopPropagation">
+      <text class="modal-title">发起法律咨询</text>
+
+      <view class="input-group">
+        <input
+          class="input-field"
+          placeholder="咨询标题（可选）"
+          value="{{newTitle}}"
+          bindinput="onTitleInput"
+        />
+      </view>
+
+      <view class="input-group">
+        <textarea
+          class="textarea-field"
+          placeholder="请详细描述您的法律问题..."
+          value="{{newContent}}"
+          bindinput="onContentInput"
+          maxlength="6000"
+          auto-height
+        />
+      </view>
+
+      <view class="modal-actions">
+        <button class="btn-secondary" style="margin:0;flex:1;" bindtap="closeCreate">取消</button>
+        <button
+          class="btn-primary"
+          style="margin:0;flex:2;margin-left:20rpx;"
+          disabled="{{submitting}}"
+          bindtap="submitConsultation"
+        >提交咨询</button>
+      </view>
+    </view>
+  </view>
+</view>

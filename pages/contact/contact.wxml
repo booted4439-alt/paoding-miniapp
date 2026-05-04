@@ -1,0 +1,52 @@
+<!-- 联系我们 -->
+<view class="contact-page">
+  <view class="contact-header">
+    <text class="contact-title">联系我们</text>
+    <text class="contact-desc">专业律师团队，为您提供优质法律服务</text>
+  </view>
+
+  <view class="contact-list card">
+    <view class="contact-item" bindtap="callPhone">
+      <text class="contact-icon">📞</text>
+      <view class="contact-info">
+        <text class="contact-label">电话</text>
+        <text class="contact-value">{{phone}}</text>
+      </view>
+      <text class="contact-action">呼叫</text>
+    </view>
+
+    <view class="contact-item" bindtap="copyInfo" data-type="email">
+      <text class="contact-icon">✉️</text>
+      <view class="contact-info">
+        <text class="contact-label">邮箱</text>
+        <text class="contact-value">{{email}}</text>
+      </view>
+      <text class="contact-action">复制</text>
+    </view>
+
+    <view class="contact-item" bindtap="openMap">
+      <text class="contact-icon">📍</text>
+      <view class="contact-info">
+        <text class="contact-label">地址</text>
+        <text class="contact-value">{{address}}</text>
+      </view>
+      <text class="contact-action">导航</text>
+    </view>
+  </view>
+
+  <view class="card">
+    <text class="work-hours-title">工作时间</text>
+    <text class="work-hours-text">{{workHours}}</text>
+  </view>
+
+  <view class="card" wx:if="{{wechatQr}}">
+    <text class="work-hours-title">微信公众号</text>
+    <image
+      class="qr-image"
+      src="{{API_BASE + wechatQr}}"
+      mode="aspectFit"
+      bindtap="previewWechat"
+    />
+    <text class="qr-hint">长按或点击放大</text>
+  </view>
+</view>

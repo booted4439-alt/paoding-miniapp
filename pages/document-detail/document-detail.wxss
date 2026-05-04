@@ -1,0 +1,161 @@
+/* 文档详情 */
+.doc-detail-page {
+  padding-bottom: 40rpx;
+}
+
+.doc-detail-header {
+  margin-top: 20rpx;
+}
+
+.doc-detail-title {
+  font-size: 36rpx;
+  font-weight: 700;
+  color: #333;
+  display: block;
+  line-height: 1.5;
+}
+
+.doc-detail-meta {
+  display: flex;
+  align-items: center;
+  margin-top: 16rpx;
+  gap: 16rpx;
+}
+
+.doc-detail-content {
+  line-height: 1.8;
+}
+
+/* rich-text 渲染的 markdown 内容样式 */
+.doc-rendered {
+  font-size: 28rpx;
+  color: #444;
+  line-height: 1.8;
+  width: 100%;
+}
+
+.doc-rendered h1 {
+  font-size: 38rpx;
+  font-weight: 700;
+  color: #4d6bfe;
+  margin: 30rpx 0 16rpx;
+  line-height: 1.4;
+}
+
+.doc-rendered h2 {
+  font-size: 34rpx;
+  font-weight: 600;
+  color: #333;
+  margin: 24rpx 0 12rpx;
+  line-height: 1.4;
+}
+
+.doc-rendered h3 {
+  font-size: 30rpx;
+  font-weight: 600;
+  color: #555;
+  margin: 20rpx 0 10rpx;
+}
+
+.doc-rendered p {
+  margin-bottom: 16rpx;
+  font-size: 28rpx;
+  color: #444;
+  line-height: 1.8;
+}
+
+.doc-rendered strong {
+  font-weight: 700;
+  color: #333;
+}
+
+.doc-rendered em {
+  font-style: italic;
+}
+
+.doc-rendered ul, .doc-rendered ol {
+  padding-left: 40rpx;
+  margin-bottom: 16rpx;
+}
+
+.doc-rendered li {
+  font-size: 28rpx;
+  color: #444;
+  margin-bottom: 8rpx;
+  line-height: 1.6;
+}
+
+.doc-rendered code {
+  font-size: 26rpx;
+  background: #f5f5f5;
+  padding: 2rpx 10rpx;
+  border-radius: 6rpx;
+  color: #d63384;
+  font-family: Menlo, monospace;
+}
+
+.doc-rendered pre {
+  background: #f5f5f5;
+  border-radius: 12rpx;
+  padding: 20rpx;
+  margin-bottom: 16rpx;
+  overflow-x: auto;
+}
+
+.doc-rendered pre code {
+  background: none;
+  padding: 0;
+  color: #333;
+  font-size: 24rpx;
+}
+
+.doc-rendered blockquote {
+  border-left: 6rpx solid #4d6bfe;
+  padding-left: 20rpx;
+  margin: 16rpx 0;
+  color: #666;
+  font-style: italic;
+}
+
+.doc-rendered a {
+  color: #7c93ff;
+  text-decoration: underline;
+}
+
+.doc-rendered table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 16rpx 0;
+  font-size: 26rpx;
+}
+
+.doc-rendered th, .doc-rendered td {
+  border: 2rpx solid #e5e5e5;
+  padding: 12rpx 16rpx;
+  text-align: left;
+}
+
+.doc-rendered th {
+  background: #f0f7f0;
+  font-weight: 600;
+  color: #333;
+}
+
+.doc-rendered img {
+  max-width: 100%;
+  border-radius: 8rpx;
+  margin: 10rpx 0;
+}
+
+.doc-detail-footer {
+  display: flex;
+  justify-content: center;
+  padding: 30rpx;
+}
+
+.loading-state {
+  padding: 120rpx 0;
+  text-align: center;
+  color: #999;
+  font-size: 28rpx;
+}

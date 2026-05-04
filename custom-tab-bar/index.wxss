@@ -1,0 +1,40 @@
+/* 自定义底部标签栏 */
+.tab-bar {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 100rpx;
+  background: #ffffff;
+  display: flex;
+  align-items: center;
+  border-top: 2rpx solid #f0f0f0;
+  z-index: 100;
+  padding-bottom: env(safe-area-inset-bottom);
+}
+
+.tab-item {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+}
+
+.tab-icon {
+  width: 44rpx;
+  height: 44rpx;
+  margin-bottom: 6rpx;
+}
+
+.tab-text {
+  font-size: 22rpx;
+  color: #666666;
+  font-weight: 500;
+}
+
+.tab-item.active .tab-text {
+  color: #4d6bfe;
+  font-weight: 700;
+}

@@ -1,0 +1,97 @@
+/* 登录页 */
+.login-container {
+  min-height: 100vh;
+  background: #ffffff;
+  padding: 80rpx 50rpx 40rpx;
+}
+
+.login-header {
+  text-align: center;
+  margin-bottom: 60rpx;
+}
+
+.login-title {
+  font-size: 48rpx;
+  font-weight: 700;
+  color: #333;
+  display: block;
+}
+
+.login-subtitle {
+  font-size: 28rpx;
+  color: #999;
+  display: block;
+  margin-top: 12rpx;
+}
+
+/* 微信登录 */
+.wx-login {
+  margin-bottom: 40rpx;
+}
+
+.wx-login-btn {
+  width: 100%;
+  height: 88rpx;
+  background: #07c160;
+  color: #ffffff;
+  font-size: 32rpx;
+  border-radius: 44rpx;
+  border: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  line-height: 1;
+}
+
+.wx-login-btn:active {
+  opacity: 0.85;
+}
+
+.wx-icon {
+  margin-right: 12rpx;
+}
+
+/* 分割线 */
+.divider-row {
+  display: flex;
+  align-items: center;
+  margin-bottom: 40rpx;
+}
+
+.divider-line {
+  flex: 1;
+  height: 2rpx;
+  background: #e5e5e5;
+}
+
+.divider-text {
+  font-size: 24rpx;
+  color: #ccc;
+  padding: 0 20rpx;
+}
+
+/* 表单 */
+.login-form .input-group {
+  margin-bottom: 30rpx;
+}
+
+.switch-mode {
+  text-align: right;
+  font-size: 26rpx;
+  color: #7c93ff;
+  margin-top: -10rpx;
+  margin-bottom: 20rpx;
+}
+
+.register-link {
+  text-align: center;
+  margin-top: 40rpx;
+  font-size: 26rpx;
+  color: #999;
+}
+
+.register-link .link {
+  color: #7c93ff;
+  margin-left: 4rpx;
+}
