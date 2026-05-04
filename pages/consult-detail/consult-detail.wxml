@@ -3,68 +3,45 @@
   <!-- 顶部信息 -->
   <view class="chat-header">
     <view class="chat-header-top">
-      <text class="chat-title" wx:if="{{consultation}}">{{consultation.title}}</text>
-      <text class="status-tag status-{{consultation.status}}" wx:if="{{consultation}}">{{getStatusText(consultation.status)}}</text>
+      <text wx:if="{{consultation}}" class="chat-title">{{consultation.title}}</text>
+      <text wx:if="{{consultation}}" class="status-tag status-{{consultation.status}}">{{getStatusText(consultation.status)}}</text>
     </view>
-    <view class="chat-header-actions" wx:if="{{consultation && consultation.status !== 'closed'}}">
+    <view wx:if="{{consultation && consultation.status !== 'closed'}}" class="chat-header-actions">
       <text class="action-btn" bindtap="closeConsultation">关闭咨询</text>
       <text class="action-btn danger" bindtap="deleteConsultation">删除</text>
     </view>
   </view>
 
   <!-- 加载中 -->
-  <view class="loading-state" wx:if="{{loading}}">
+  <view wx:if="{{loading}}" class="loading-state">
     <text>加载中...</text>
   </view>
 
   <!-- 消息列表 -->
-  <scroll-view
-    class="msg-list"
-    scroll-y
-    scroll-with-animation
-    scroll-into-view="msg-end"
-    wx:if="{{!loading}}"
-  >
-    <view
-      class="msg-item {{msg.isMine ? '' : 'other'}}"
-      wx:for="{{messages}}"
-      wx:key="id"
-    >
-      <view class="msg-bubble">
-        <text class="msg-sender" wx:if="{{!msg.isMine && !msg.is_system}}">{{msg.sender}}</text>
-        <text class="msg-text" wx:if="{{msg.content}}">{{msg.content}}</text>
-        <image
-          class="msg-image"
-          wx:if="{{msg.isImage}}"
-          src="{{msg.fileUrl}}"
-          mode="aspectFit"
-          data-url="{{msg.file_url}}"
-          bindtap="previewFile"
-        />
-        <view class="msg-file" wx:elif="{{msg.file_url}}">
-          <text>📎 附件</text>
+  <scroll-view wx:if="{{!loading}}" class="msg-list" scroll-y scroll-with-animation scroll-into-view="msg-end">
+    <block wx:for="{{messages}}" wx:key="id">
+      <view class="msg-item {{item.isMine ? '' : 'other'}}">
+        <view class="msg-bubble">
+          <text wx:if="{{!item.isMine && !item.is_system}}" class="msg-sender">{{item.sender}}</text>
+          <text wx:if="{{item.content}}" class="msg-text">{{item.content}}</text>
+          <image wx:if="{{item.isImage}}" class="msg-image" src="{{item.fileUrl}}" mode="aspectFit" data-url="{{item.file_url}}" bindtap="previewFile" />
+          <view wx:elif="{{item.file_url}}" class="msg-file">
+            <text>📎 附件</text>
+          </view>
+          <text class="msg-time">{{item.created_at}}</text>
         </view>
-        <text class="msg-time">{{msg.created_at}}</text>
       </view>
-    </view>
+    </block>
     <view id="msg-end"></view>
   </scroll-view>
 
   <!-- 输入区 -->
-  <view class="input-bar safe-bottom" wx:if="{{!consultation || consultation.status !== 'closed'}}">
+  <view wx:if="{{!consultation || consultation.status !== 'closed'}}" class="input-bar safe-bottom">
     <view class="input-tools">
       <text class="tool-btn" bindtap="chooseImage">📷</text>
       <text class="tool-btn" bindtap="chooseFile">📎</text>
     </view>
-    <input
-      class="chat-input"
-      type="text"
-      placeholder="输入消息..."
-      value="{{inputContent}}"
-      bindinput="onInput"
-      confirm-type="send"
-      bindconfirm="sendMessage"
-    />
+    <input class="chat-input" type="text" placeholder="输入消息..." value="{{inputContent}}" bindinput="onInput" confirm-type="send" bindconfirm="sendMessage" />
     <button class="send-btn" bindtap="sendMessage">发送</button>
   </view>
 </view>
