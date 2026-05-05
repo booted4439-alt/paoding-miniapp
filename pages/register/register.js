@@ -12,6 +12,7 @@ Page({
     password: '',
     confirmPassword: '',
     smsCode: '',
+    email: '',
     codeBtnText: '获取验证码',
     codeBtnDisabled: false,
     countdown: 0,
@@ -24,6 +25,7 @@ Page({
   onPasswordInput(e) { this.setData({ password: e.detail.value }) },
   onConfirmInput(e) { this.setData({ confirmPassword: e.detail.value }) },
   onSmsCodeInput(e) { this.setData({ smsCode: e.detail.value }) },
+  onEmailInput(e) { this.setData({ email: e.detail.value }) },
   toggleAgree() { this.setData({ agreeTerms: !this.data.agreeTerms }) },
 
   /** 发送验证码 */
@@ -63,7 +65,7 @@ Page({
   /** 提交注册 */
   submitRegister() {
     if (this.data.submitting) return
-    const { username, phone, password, confirmPassword, smsCode, agreeTerms } = this.data
+    const { username, phone, password, confirmPassword, smsCode, email, agreeTerms } = this.data
 
     if (!username.trim()) { util.showError('请输入用户名'); return }
     if (!util.isValidPhone(phone)) { util.showError('请输入正确的手机号码'); return }
@@ -76,7 +78,18 @@ Page({
     this.setData({ submitting: true })
     util.showLoading('注册中...')
 
-    api.register({ username, phone, password, sms_code: smsCode })
+    const regData = { username, phone, password, sms_code: smsCode }
+    if (email.trim()) {
+      if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email.trim())) {
+        wx.hideLoading()
+        this.setData({ submitting: false })
+        util.showError('邮箱格式不正确')
+        return
+      }
+      regData.email = email.trim()
+    }
+
+    api.register(regData)
       .then(data => {
         wx.hideLoading()
         if (data.token) {

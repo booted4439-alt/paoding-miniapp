@@ -64,6 +64,16 @@
       />
     </view>
 
+    <view class="input-group">
+      <input
+        class="input-field"
+        type="text"
+        placeholder="邮箱（选填）"
+        value="{{email}}"
+        bindinput="onEmailInput"
+      />
+    </view>
+
     <view class="agreement" bindtap="toggleAgree">
       <text class="checkbox {{agreeTerms ? 'checked' : ''}}">{{agreeTerms ? '✓' : ''}}</text>
       <text class="agree-text">我已阅读并同意 <text class="link">《用户协议》</text></text>

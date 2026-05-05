@@ -3,7 +3,7 @@
  * 统一管理所有后端接口调用
  */
 
-const API_BASE = 'https://www.paodinglaw.com'
+const API_BASE = 'https://paodinglaw.com'
 
 /**
  * 通用请求封装
@@ -50,11 +50,17 @@ function request(url, options = {}) {
 /**
  * 微信小程序登录（后端交换 code → openid → 返回 token）
  * POST /api/wechat/login
+ * @param {string} code - wx.login() 获取的 code
+ * @param {string} [nickname] - 微信昵称（可选），用于首次创建用户时作为用户名
  */
-function wechatLogin(code) {
+function wechatLogin(code, nickname) {
+  const data = { code }
+  if (nickname) {
+    data.nickname = nickname
+  }
   return request('/api/wechat/login', {
     method: 'POST',
-    data: { code }
+    data
   })
 }
 
@@ -66,6 +72,32 @@ function bindPhone(encryptedData, iv) {
   return request('/api/wechat/bind-phone', {
     method: 'POST',
     data: { encryptedData, iv }
+  })
+}
+
+/**
+ * 手动绑定手机号（开发模式用）
+ * POST /api/wechat/bind-phone   dev 模式直接传 phone
+ */
+function bindPhoneDirect(phone) {
+  return request('/api/wechat/bind-phone', {
+    method: 'POST',
+    data: { phone }
+  })
+}
+
+/**
+ * 绑定手机号（短信验证码 + 可选邮箱）
+ * POST /api/wechat/bind-phone
+ */
+function bindPhoneWithSms(phone, smsCode, email) {
+  const data = { phone, sms_code: smsCode }
+  if (email) {
+    data.email = email
+  }
+  return request('/api/wechat/bind-phone', {
+    method: 'POST',
+    data
   })
 }
 
@@ -255,6 +287,8 @@ function objToParams(obj) {
 module.exports = {
   wechatLogin,
   bindPhone,
+  bindPhoneDirect,
+  bindPhoneWithSms,
   sendSmsCode,
   verifySmsCode,
   login,

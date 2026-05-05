@@ -5,75 +5,137 @@
     <text class="login-subtitle">庖丁法律服务</text>
   </view>
 
-  <!-- 微信登录 -->
-  <view class="wx-login">
-    <button class="wx-login-btn" bindtap="wechatLogin">
-      <text class="wx-icon">微信</text>
-      <text>微信一键登录</text>
-    </button>
-  </view>
-
-  <view class="divider-row">
-    <view class="divider-line"></view>
-    <text class="divider-text">或</text>
-    <view class="divider-line"></view>
-  </view>
-
-  <!-- 手机号登录 -->
-  <view class="login-form">
-    <view class="input-group">
-      <input
-        class="input-field"
-        type="text"
-        placeholder="请输入手机号"
-        maxlength="11"
-        value="{{phone}}"
-        bindinput="onPhoneInput"
-      />
+  <!-- 微信登录（默认显示） -->
+  <block wx:if="{{!showBindPhone}}">
+    <view class="wx-login">
+      <button
+        class="wx-login-btn"
+        bindtap="wechatLogin"
+      >
+        <text class="wx-icon">微信</text>
+        <text>微信一键登录</text>
+      </button>
     </view>
 
-    <block wx:if="{{loginMode === 'password'}}">
+    <view class="divider-row">
+      <view class="divider-line"></view>
+      <text class="divider-text">或</text>
+      <view class="divider-line"></view>
+    </view>
+
+    <!-- 手机号登录 -->
+    <view class="login-form">
       <view class="input-group">
         <input
           class="input-field"
-          type="password"
-          placeholder="请输入密码"
-          value="{{password}}"
-          bindinput="onPasswordInput"
+          type="text"
+          placeholder="请输入手机号"
+          maxlength="11"
+          value="{{phone}}"
+          bindinput="onPhoneInput"
         />
       </view>
-      <view class="switch-mode" bindtap="switchMode">使用验证码登录</view>
-    </block>
 
-    <block wx:else>
-      <view class="input-group">
-        <view class="input-row">
+      <block wx:if="{{loginMode === 'password'}}">
+        <view class="input-group">
+          <input
+            class="input-field"
+            type="password"
+            placeholder="请输入密码"
+            value="{{password}}"
+            bindinput="onPasswordInput"
+          />
+        </view>
+        <view class="switch-mode" bindtap="switchMode">使用验证码登录</view>
+      </block>
+
+      <block wx:else>
+        <view class="input-group">
+          <view class="input-row">
+            <input
+              class="input-field"
+              type="text"
+              placeholder="请输入验证码"
+              maxlength="6"
+              value="{{smsCode}}"
+              bindinput="onSmsCodeInput"
+            />
+            <view
+              class="code-btn {{codeBtnDisabled ? 'disabled' : ''}}"
+              bindtap="sendCode"
+            >{{codeBtnText}}</view>
+          </view>
+        </view>
+        <view class="switch-mode" bindtap="switchMode">使用密码登录</view>
+      </block>
+
+      <button
+        class="btn-primary"
+        bindtap="submitLogin"
+        disabled="{{submitting}}"
+      >登录</button>
+
+      <view class="register-link">
+        <text>还没有账号？</text>
+        <text class="link" bindtap="goRegister">立即注册</text>
+      </view>
+    </view>
+  </block>
+
+  <!-- 微信首次登录 → 绑定手机号 -->
+  <block wx:if="{{showBindPhone}}">
+    <view class="bind-phone-container">
+      <text class="bind-phone-title">首次使用，请绑定手机号</text>
+      <text class="bind-phone-desc">绑定后可使用更多服务，邮箱选填</text>
+
+      <view class="login-form">
+        <!-- 手机号 -->
+        <view class="input-group">
           <input
             class="input-field"
             type="text"
-            placeholder="请输入验证码"
-            maxlength="6"
-            value="{{smsCode}}"
-            bindinput="onSmsCodeInput"
+            placeholder="请输入手机号"
+            maxlength="11"
+            value="{{bindPhoneNum}}"
+            bindinput="onBindPhoneInput"
           />
-          <view
-            class="code-btn {{codeBtnDisabled ? 'disabled' : ''}}"
-            bindtap="sendCode"
-          >{{codeBtnText}}</view>
         </view>
+
+        <!-- 验证码 -->
+        <view class="input-group">
+          <view class="input-row">
+            <input
+              class="input-field"
+              type="text"
+              placeholder="请输入短信验证码"
+              maxlength="6"
+              value="{{bindSmsCode}}"
+              bindinput="onBindSmsCodeInput"
+            />
+            <view
+              class="code-btn {{bindCodeBtnDisabled ? 'disabled' : ''}}"
+              bindtap="sendBindCode"
+            >{{bindCodeBtnText}}</view>
+          </view>
+        </view>
+
+        <!-- 邮箱（选填） -->
+        <view class="input-group">
+          <input
+            class="input-field"
+            type="text"
+            placeholder="邮箱（选填）"
+            value="{{bindEmail}}"
+            bindinput="onBindEmailInput"
+          />
+        </view>
+
+        <button
+          class="btn-primary"
+          bindtap="submitBindPhone"
+          disabled="{{submitting}}"
+        >绑定</button>
       </view>
-      <view class="switch-mode" bindtap="switchMode">使用密码登录</view>
-    </block>
-
-    <button
-      class="btn-primary"
-      bindtap="submitLogin"
-      disabled="{{submitting}}"
-    >登录</button>
-
-    <view class="register-link">
-      <text>还没有账号？</text>
-      <text class="link" bindtap="goRegister">立即注册</text>
     </view>
-  </view>
+  </block>
 </view>
