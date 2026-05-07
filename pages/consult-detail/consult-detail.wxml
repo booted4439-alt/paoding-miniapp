@@ -7,8 +7,8 @@
       <text wx:if="{{consultation}}" class="status-tag status-{{consultation.status}}">{{getStatusText(consultation.status)}}</text>
     </view>
   </view>
-  <view wx:if="{{consultation && consultation.status === 'completed' && consultation.actual_fee}}" class="fee-info">
-    <text>已扣费 <text style="color:#e44;font-weight:700;">{{(consultation.actual_fee/100).toFixed(0)}}</text> 元，律师回复 {{consultation.lawyer_reply_count || 0}} 次，剔除 {{consultation.excluded_count || 0}} 次，最终按照 {{(consultation.lawyer_reply_count || 0) - (consultation.excluded_count || 0)}} 次扣费</text>
+  <view wx:if="{{showFeeInfo}}" class="fee-info">
+    <text>已扣费 <text style="color:#e44;font-weight:700;">{{feeAmount}}</text> 元，律师回复 {{replyCount}} 次，剔除 {{excludedCount}} 次，最终按照 {{payableCount}} 次扣费</text>
   </view>
 
   <!-- 加载中 -->

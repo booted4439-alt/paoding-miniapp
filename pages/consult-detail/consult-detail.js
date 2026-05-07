@@ -69,7 +69,19 @@ Page({
   loadConsultation() {
     return api.getConsultation(this.data.consultationId)
       .then(c => {
-        this.setData({ consultation: c })
+        const feeData = {}
+        if (c.status === 'completed' && c.actual_fee) {
+          const replyCount = c.lawyer_reply_count || 0
+          const excludedCount = c.excluded_count || 0
+          feeData.showFeeInfo = true
+          feeData.feeAmount = (c.actual_fee / 100).toFixed(0)
+          feeData.replyCount = replyCount
+          feeData.excludedCount = excludedCount
+          feeData.payableCount = replyCount - excludedCount
+        } else {
+          feeData.showFeeInfo = false
+        }
+        this.setData({ consultation: c, ...feeData })
       })
   },
 
