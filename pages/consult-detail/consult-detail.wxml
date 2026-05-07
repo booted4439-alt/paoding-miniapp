@@ -35,7 +35,7 @@
   </scroll-view>
 
   <!-- 输入区 -->
-  <view wx:if="{{!consultation || (consultation.status !== 'closed' && consultation.status !== 'completed')}}" class="input-bar safe-bottom">
+  <view wx:if="{{!consultation || consultation.status !== 'closed'}}" class="input-bar safe-bottom">
     <textarea class="chat-input" placeholder="输入消息..." value="{{inputContent}}" bindinput="onInput" auto-height maxlength="6000" confirm-type="send" bindconfirm="sendMessage" />
     <view class="input-tools">
       <text class="tool-btn" bindtap="chooseImage">📷</text>
