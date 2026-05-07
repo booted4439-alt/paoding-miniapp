@@ -81,7 +81,8 @@ Page({
         } else {
           feeData.showFeeInfo = false
         }
-        this.setData({ consultation: c, ...feeData })
+        const statusMap = { pending: '待处理', active: '进行中', completed: '已完成', closed: '已结束' }
+        this.setData({ consultation: c, statusText: statusMap[c.status] || c.status, ...feeData })
       })
   },
 

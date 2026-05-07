@@ -4,7 +4,7 @@
   <view class="chat-header">
     <view class="chat-header-top">
       <text wx:if="{{consultation}}" class="chat-title">{{consultation.title}}</text>
-      <text wx:if="{{consultation}}" class="status-tag status-{{consultation.status}}">{{getStatusText(consultation.status)}}</text>
+      <text wx:if="{{consultation}}" class="status-tag status-{{consultation.status}}">{{statusText}}</text>
     </view>
   </view>
   <view wx:if="{{showFeeInfo}}" class="fee-info">
