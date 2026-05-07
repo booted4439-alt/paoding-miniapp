@@ -43,15 +43,6 @@
       <text class="modal-title">发起法律咨询</text>
 
       <view class="input-group">
-        <input
-          class="input-field"
-          placeholder="咨询标题（可选）"
-          value="{{newTitle}}"
-          bindinput="onTitleInput"
-        />
-      </view>
-
-      <view class="input-group">
         <textarea
           class="textarea-field"
           placeholder="请详细描述您的法律问题..."
@@ -60,6 +51,12 @@
           maxlength="6000"
           auto-height
         />
+      </view>
+
+      <view class="upload-bar">
+        <button class="upload-btn" bindtap="chooseImage">📷 拍照/相册</button>
+        <button class="upload-btn" bindtap="chooseFiles">📎 从微信选文件</button>
+        <view wx:if="{{newFiles.length > 0}}" class="upload-info">已选 {{newFiles.length}} 个文件</view>
       </view>
 
       <view class="modal-actions">

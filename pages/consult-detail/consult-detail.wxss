@@ -58,6 +58,7 @@
   display: flex;
   margin-bottom: 24rpx;
   justify-content: flex-start;
+  /* padding: 0 20rpx; */
 }
 
 .msg-item.other {
@@ -72,7 +73,11 @@
   box-shadow: 0 2rpx 4rpx rgba(0,0,0,0.04);
 }
 
-.msg-item:not(.other) .msg-bubble {
+.msg-item.self {
+  justify-content: flex-end;
+  margin-right: 30px;
+}
+.msg-item.self .msg-bubble {
   background: #4d6bfe;
   color: #ffffff;
 }
@@ -82,6 +87,10 @@
   color: #7c93ff;
   display: block;
   margin-bottom: 6rpx;
+}
+.msg-item.self .msg-sender {
+  color: rgba(255,255,255,0.8);
+  text-align: right;
 }
 
 .msg-text {
@@ -113,8 +122,19 @@
   margin-top: 8rpx;
 }
 
-.msg-item:not(.other) .msg-time {
+.msg-item.self .msg-time {
   color: rgba(255,255,255,0.6);
+}
+
+/* 费用信息 */
+.fee-info {
+  background: #e8f5e9;
+  padding: 16rpx 30rpx;
+  border-left: 6rpx solid #4caf50;
+  font-size: 24rpx;
+  color: #555;
+  line-height: 1.5;
+  flex-shrink: 0;
 }
 
 /* 输入栏 */

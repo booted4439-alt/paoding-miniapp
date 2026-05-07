@@ -8,6 +8,7 @@
     "pages/documents/documents",
     "pages/document-detail/document-detail",
     "pages/contact/contact",
+    "pages/webview/webview",
     "pages/profile/profile"
   ],
   "window": {

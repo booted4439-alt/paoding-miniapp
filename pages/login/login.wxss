@@ -127,3 +127,17 @@
 .bind-skip:active {
   opacity: 0.6;
 }
+
+/* 协议 */
+.agreement-text {
+  text-align: center;
+  font-size: 24rpx;
+  color: #999;
+  margin-bottom: 24rpx;
+  line-height: 1.6;
+}
+
+.agreement-text .link {
+  color: #7c93ff;
+  display: inline;
+}

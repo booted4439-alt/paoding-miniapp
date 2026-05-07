@@ -11,7 +11,7 @@
   <!-- 已登录 -->
   <view class="profile-header logged-in" wx:else>
     <view class="avatar">
-      <text class="avatar-text">{{userInfo.username ? userInfo.username[0] : 'U'}}</text>
+      <image class="avatar-img" src="/images/default_avatar.png"></image>
     </view>
     <text class="user-name">{{userInfo.username || '用户'}}</text>
     <text class="user-phone" wx:if="{{userInfo.phone}}">{{userInfo.phone}}</text>

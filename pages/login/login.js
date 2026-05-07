@@ -45,6 +45,25 @@ Page({
   onBindSmsCodeInput(e) { this.setData({ bindSmsCode: e.detail.value }) },
   onBindEmailInput(e) { this.setData({ bindEmail: e.detail.value }) },
 
+  /** 如果从其他页面跳过来要求强制绑定 */
+  onLoad(options) {
+    if (options && options.forceBind) {
+      // 已有 token 但没手机号，直接进入绑定页
+      wx.login({
+        success: res => {
+          if (res.code) {
+            api.wechatLogin(res.code).then(data => {
+              if (data.token) {
+                getApp().setLogin(data.token, data.user || {})
+                this.setData({ showBindPhone: true, isDevMode: !!data.dev_mode })
+              }
+            }).catch(() => {})
+          }
+        }
+      })
+    }
+  },
+
   /** ---- 登录页验证码 ---- */
   sendCode() {
     if (this.data.codeBtnDisabled) return
@@ -248,6 +267,12 @@ Page({
     } else {
       doLogin()
     }
+  },
+
+  /** 打开外部链接 */
+  openUrl(e) {
+    const url = e.currentTarget.dataset.url
+    wx.navigateTo({ url: '/pages/webview/webview?url=' + encodeURIComponent(url) })
   },
 
   goRegister() {

@@ -16,18 +16,16 @@ Page({
     codeBtnText: '获取验证码',
     codeBtnDisabled: false,
     countdown: 0,
-    submitting: false,
-    agreeTerms: true
+    submitting: false
   },
 
   onUsernameInput(e) { this.setData({ username: e.detail.value }) },
   onPhoneInput(e) { this.setData({ phone: e.detail.value }) },
   onPasswordInput(e) { this.setData({ password: e.detail.value }) },
   onConfirmInput(e) { this.setData({ confirmPassword: e.detail.value }) },
+
   onSmsCodeInput(e) { this.setData({ smsCode: e.detail.value }) },
   onEmailInput(e) { this.setData({ email: e.detail.value }) },
-  toggleAgree() { this.setData({ agreeTerms: !this.data.agreeTerms }) },
-
   /** 发送验证码 */
   sendCode() {
     if (this.data.codeBtnDisabled) return
@@ -73,8 +71,14 @@ Page({
     if (!password) { util.showError('请输入密码'); return }
     if (password.length < 6) { util.showError('密码至少6位'); return }
     if (password !== confirmPassword) { util.showError('两次密码不一致'); return }
-    if (!agreeTerms) { util.showError('请同意用户协议'); return }
-
+    // 密码：只能字母和数字
+    for (var _i = 0; _i < password.length; _i++) {
+      var _ch = password.charAt(_i);
+      if (!((_ch >= 'a' && _ch <= 'z') || (_ch >= 'A' && _ch <= 'Z') || (_ch >= '0' && _ch <= '9'))) {
+        util.showError('密码只能包含字母和数字');
+        return;
+      }
+    }
     this.setData({ submitting: true })
     util.showLoading('注册中...')
 
@@ -105,6 +109,12 @@ Page({
         this.setData({ submitting: false })
         util.showError(err.message || '注册失败')
       })
+  },
+
+  /** 打开外部链接 */
+  openUrl(e) {
+    const url = e.currentTarget.dataset.url
+    wx.navigateTo({ url: '/pages/webview/webview?url=' + encodeURIComponent(url) })
   },
 
   goLogin() {

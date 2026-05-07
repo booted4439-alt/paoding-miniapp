@@ -11,9 +11,28 @@ Page({
     page: 1,
     hasMore: true,
     showCreateModal: false,
-    newTitle: '',
     newContent: '',
+    newFiles: [],
     submitting: false
+  },
+
+  /** 检查是否有手机号，没有则跳绑定 */
+  _checkPhone(callback) {
+    const app = getApp()
+    const user = app.globalData.userInfo || {}
+    if (!user.phone) {
+      wx.showModal({
+        title: '提示',
+        content: '请先绑定手机号，绑定后才能发起咨询',
+        success: res => {
+          if (res.confirm) {
+            wx.navigateTo({ url: '/pages/login/login?forceBind=1' })
+          }
+        }
+      })
+      return false
+    }
+    return true
   },
 
   onLoad() {
@@ -23,7 +42,6 @@ Page({
 
   onShow() {
     if (!util.isLoggedIn()) return
-    // 回到页面时刷新列表
     this.setData({ page: 1, hasMore: true })
     this.loadConsultations()
   },
@@ -62,10 +80,26 @@ Page({
   /** 打开发起咨询弹窗 */
   openCreate() {
     if (!util.checkLogin()) return
+    if (!this._checkPhone()) return
+    // 检查余额是否 >= 100元
+    const app = getApp()
+    const balance = app.globalData.userInfo?.balance || 0
+    if (balance < 10000) {
+      wx.showModal({
+        title: '余额不足',
+        content: '发起咨询需要余额不低于100元，当前余额' + (balance/100).toFixed(2) + '元。请先充值。',
+        success: res => {
+          if (res.confirm) {
+            wx.navigateTo({ url: '/pages/profile/profile' })
+          }
+        }
+      })
+      return
+    }
     this.setData({
       showCreateModal: true,
-      newTitle: '',
-      newContent: ''
+      newContent: '',
+      newFiles: []
     })
   },
 
@@ -73,42 +107,79 @@ Page({
     this.setData({ showCreateModal: false })
   },
 
-  onTitleInput(e) { this.setData({ newTitle: e.detail.value }) },
   onContentInput(e) { this.setData({ newContent: e.detail.value }) },
+
+  /** 选择图片 */
+  chooseImage() {
+    wx.chooseImage({
+      count: 9,
+      sizeType: ['compressed'],
+      success: res => {
+        this.setData({ newFiles: res.tempFiles })
+      }
+    })
+  },
+
+  /** 选择附件 */
+  chooseFiles() {
+    wx.chooseMessageFile({
+      count: 9,
+      type: 'all',
+      success: res => {
+        this.setData({ newFiles: res.tempFiles })
+      }
+    })
+  },
 
   /** 提交新咨询 */
   submitConsultation() {
     if (this.data.submitting) return
-    const { newTitle, newContent } = this.data
-    if (!newContent.trim()) {
-      util.showError('请输入咨询内容')
+    const { newContent, newFiles } = this.data
+    if (!newContent.trim() && newFiles.length === 0) {
+      util.showError('请输入咨询内容或选择附件')
       return
     }
 
     this.setData({ submitting: true })
     util.showLoading('提交中...')
 
-    api.createConsultation(
-      newTitle.trim() || newContent.trim().slice(0, 50),
-      newContent.trim()
-    )
-      .then(data => {
-        wx.hideLoading()
-        util.showSuccess('咨询已提交')
-        this.setData({
-          showCreateModal: false,
-          submitting: false,
-          page: 1,
-          hasMore: true,
-          consultations: []
+    // 有附件就走 with-message 接口（含文件上传）
+    const title = newContent.trim().slice(0, 50) || '法律咨询'
+
+    if (newFiles.length > 0) {
+      api.createConsultationWithFiles(title, newContent.trim(), newFiles)
+        .then(() => {
+          this._afterSubmit()
         })
-        this.loadConsultations()
-      })
-      .catch(err => {
-        wx.hideLoading()
-        this.setData({ submitting: false })
-        util.showError(err.message || '提交失败')
-      })
+        .catch(err => {
+          wx.hideLoading()
+          this.setData({ submitting: false })
+          util.showError(err.message || '提交失败')
+        })
+    } else {
+      api.createConsultation(title, newContent.trim())
+        .then(() => {
+          this._afterSubmit()
+        })
+        .catch(err => {
+          wx.hideLoading()
+          this.setData({ submitting: false })
+          util.showError(err.message || '提交失败')
+        })
+    }
+  },
+
+  _afterSubmit() {
+    wx.hideLoading()
+    util.showSuccess('咨询已提交')
+    this.setData({
+      showCreateModal: false,
+      submitting: false,
+      page: 1,
+      hasMore: true,
+      consultations: []
+    })
+    this.loadConsultations()
   },
 
   /** 进入咨询详情 */
@@ -119,7 +190,7 @@ Page({
 
   /** 获取状态显示文本 */
   getStatusText(status) {
-    const map = { pending: '待处理', active: '进行中', closed: '已结束' }
+    const map = { pending: '待处理', active: '进行中', completed: '已完成', closed: '已结束' }
     return map[status] || status
   },
 

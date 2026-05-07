@@ -126,3 +126,24 @@
   display: flex;
   margin-top: 30rpx;
 }
+
+/* 附件上传 */
+.upload-bar {
+  display: flex;
+  align-items: center;
+  margin-top: 16rpx;
+}
+.upload-btn {
+  background: #f5f7fa;
+  border: 2rpx dashed #ddd;
+  border-radius: 12rpx;
+  padding: 12rpx 24rpx;
+  font-size: 26rpx;
+  color: #666;
+  line-height: 1;
+}
+.upload-info {
+  font-size: 24rpx;
+  color: #999;
+  margin-left: 16rpx;
+}

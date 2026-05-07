@@ -12,7 +12,7 @@
         class="wx-login-btn"
         bindtap="wechatLogin"
       >
-        <text class="wx-icon">微信</text>
+        <!-- <text class="wx-icon">微信</text> -->
         <text>微信一键登录</text>
       </button>
     </view>
@@ -55,7 +55,7 @@
             <input
               class="input-field"
               type="text"
-              placeholder="请输入验证码"
+              placeholder="请输入速通互联验证码"
               maxlength="6"
               value="{{smsCode}}"
               bindinput="onSmsCodeInput"
@@ -85,7 +85,7 @@
   <!-- 微信首次登录 → 绑定手机号 -->
   <block wx:if="{{showBindPhone}}">
     <view class="bind-phone-container">
-      <text class="bind-phone-title">首次使用，请绑定手机号</text>
+      <text class="bind-phone-title">请绑定手机号及邮箱</text>
       <text class="bind-phone-desc">绑定后可使用更多服务，邮箱选填</text>
 
       <view class="login-form">
@@ -107,7 +107,7 @@
             <input
               class="input-field"
               type="text"
-              placeholder="请输入短信验证码"
+              placeholder="请输入速通互联验证码"
               maxlength="6"
               value="{{bindSmsCode}}"
               bindinput="onBindSmsCodeInput"
@@ -124,12 +124,18 @@
           <input
             class="input-field"
             type="text"
-            placeholder="邮箱（选填）"
+            placeholder="邮箱（选填，律师回复时可收到通知）"
             value="{{bindEmail}}"
             bindinput="onBindEmailInput"
           />
         </view>
 
+        <view class="agreement-text">
+          <text>绑定即代表已阅读并同意我们的 </text>
+          <text class="link" data-url="https://paodinglaw.com/terms" bindtap="openUrl">用户协议</text>
+          <text> 与 </text>
+          <text class="link" data-url="https://paodinglaw.com/privacy" bindtap="openUrl">隐私政策</text>
+        </view>
         <button
           class="btn-primary"
           bindtap="submitBindPhone"

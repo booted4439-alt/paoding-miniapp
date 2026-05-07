@@ -23,7 +23,18 @@ Page({
       wx.navigateBack()
       return
     }
+    // 检查手机号
     const userInfo = wx.getStorageSync('userInfo')
+    if (!userInfo?.phone) {
+      wx.showModal({
+        title: '提示',
+        content: '请先绑定手机号',
+        success: () => {
+          wx.navigateTo({ url: '/pages/login/login?forceBind=1' })
+        }
+      })
+      return
+    }
     this.setData({ 
       consultationId: id,
       userId: userInfo?.id || 0,
@@ -91,7 +102,15 @@ Page({
       api.getMessages(this.data.consultationId)
         .then(msgs => {
           if (msgs.length > this.data.messages.length) {
-            this.setData({ messages: msgs })
+            const me = this.data.userId || 0
+            const imageTypes = ['jpg', 'png', 'jpeg', 'gif', 'webp']
+            const formatted = msgs.map(m => ({
+              ...m,
+              isMine: String(m.sender_id) === String(me),
+              isImage: m.file_url && imageTypes.includes(m.file_type),
+              fileUrl: m.file_url ? api.API_BASE + m.file_url : ''
+            }))
+            this.setData({ messages: formatted })
             this.scrollToBottom()
           }
         })
@@ -181,54 +200,44 @@ Page({
       })
   },
 
-  /** 关闭咨询 */
-  closeConsultation() {
-    wx.showModal({
-      title: '确认关闭',
-      content: '关闭后将无法继续对话',
-      success: res => {
-        if (res.confirm) {
-          api.closeConsultation(this.data.consultationId)
-            .then(() => {
-              util.showSuccess('咨询已关闭')
-              this.loadMessages()
-            })
-            .catch(err => util.showError(err.message))
-        }
-      }
-    })
-  },
-
-  /** 删除咨询 */
-  deleteConsultation() {
-    wx.showModal({
-      title: '确认删除',
-      content: '删除后不可恢复',
-      success: res => {
-        if (res.confirm) {
-          api.deleteConsultation(this.data.consultationId)
-            .then(() => {
-              util.showSuccess('已删除')
-              wx.navigateBack()
-            })
-            .catch(err => util.showError(err.message))
-        }
-      }
-    })
-  },
-
   /** 获取状态文本 */
   getStatusText(status) {
-    const map = { pending: '待处理', active: '进行中', closed: '已结束' }
+    const map = { pending: '待处理', active: '进行中', completed: '已完成', closed: '已结束' }
     return map[status] || status
   },
 
-  /** 预览文件 */
+  /** 预览/打开文件 */
   previewFile(e) {
     const url = e.currentTarget.dataset.url
-    if (url) {
-      wx.previewImage({
-        urls: [api.API_BASE + url]
+    const fileType = e.currentTarget.dataset.type || ''
+    if (!url) return
+
+    // URL 可能是相对路径（/uploads/...）也可能是完整路径
+    const fullUrl = url.startsWith('http') ? url : api.API_BASE + url
+
+    const imageTypes = ['png', 'jpg', 'jpeg', 'gif', 'webp', 'bmp']
+    if (imageTypes.includes(fileType)) {
+      wx.previewImage({ urls: [fullUrl] })
+    } else {
+      wx.downloadFile({
+        url: fullUrl,
+        success: res => {
+          if (res.statusCode === 200) {
+            wx.openDocument({
+              filePath: res.tempFilePath,
+              fileType: fileType,
+              showMenu: true
+            })
+          }
+        },
+        fail: err => {
+          console.error('downloadFile fail', err)
+          wx.showModal({
+            title: '打开失败',
+            content: '请在微信后台「开发→开发设置→服务器域名」中添加 https://www.paodinglaw.com 到 downloadFile 白名单',
+            showCancel: false
+          })
+        }
       })
     }
   }

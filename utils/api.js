@@ -3,7 +3,7 @@
  * 统一管理所有后端接口调用
  */
 
-const API_BASE = 'https://paodinglaw.com'
+const API_BASE = 'https://www.paodinglaw.com'
 
 /**
  * 通用请求封装
@@ -178,6 +178,27 @@ function createConsultation(title, description) {
 }
 
 /**
+ * 创建咨询（含文件上传）
+ */
+function createConsultationWithFiles(title, content, files) {
+  return new Promise((resolve, reject) => {
+    const token = wx.getStorageSync('token')
+    wx.uploadFile({
+      url: `${API_BASE}/api/consultations/with-message`,
+      filePath: files[0].path,
+      name: 'file',
+      formData: { title, content },
+      header: { 'Authorization': `Bearer ${token}` },
+      success(res) {
+        try { resolve(JSON.parse(res.data)) }
+        catch { resolve(res.data) }
+      },
+      fail: reject
+    })
+  })
+}
+
+/**
  * 发送消息（含文件上传）
  */
 function sendMessage(consultationId, content, filePaths = []) {
@@ -298,6 +319,7 @@ module.exports = {
   getConsultations,
   getConsultation,
   createConsultation,
+  createConsultationWithFiles,
   sendMessage,
   getMessages,
   closeConsultation,

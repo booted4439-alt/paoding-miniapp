@@ -32,7 +32,7 @@
         <input
           class="input-field"
           type="text"
-          placeholder="请输入验证码"
+          placeholder="请输入速通互联验证码"
           maxlength="6"
           value="{{smsCode}}"
           bindinput="onSmsCodeInput"
@@ -48,7 +48,7 @@
       <input
         class="input-field"
         type="password"
-        placeholder="请输入密码（至少6位）"
+        placeholder="请输入密码（至少6位，只能包含字母和数字）"
         value="{{password}}"
         bindinput="onPasswordInput"
       />
@@ -68,15 +68,17 @@
       <input
         class="input-field"
         type="text"
-        placeholder="邮箱（选填）"
+        placeholder="邮箱（选填，律师回复时可收到通知）"
         value="{{email}}"
         bindinput="onEmailInput"
       />
     </view>
 
-    <view class="agreement" bindtap="toggleAgree">
-      <text class="checkbox {{agreeTerms ? 'checked' : ''}}">{{agreeTerms ? '✓' : ''}}</text>
-      <text class="agree-text">我已阅读并同意 <text class="link">《用户协议》</text></text>
+    <view class="agreement-text">
+      <text>注册即代表已阅读并同意我们的 </text>
+      <text class="link" data-url="https://paodinglaw.com/terms" bindtap="openUrl">用户协议</text>
+      <text> 与 </text>
+      <text class="link" data-url="https://paodinglaw.com/privacy" bindtap="openUrl">隐私政策</text>
     </view>
 
     <button
