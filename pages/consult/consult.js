@@ -81,7 +81,22 @@ Page({
   openCreate() {
     if (!util.checkLogin()) return
     if (!this._checkPhone()) return
-    // 检查余额是否 >= 100元
+
+    const app = getApp()
+
+    // 从服务器刷新余额，避免使用缓存数据
+    api.getUserProfile().then(data => {
+      if (data.user) {
+        app.setLogin(wx.getStorageSync('token'), data.user)
+      }
+      this._checkBalance()
+    }).catch(() => {
+      this._checkBalance()
+    })
+  },
+
+  /** 检查余额是否 >= 100元 */
+  _checkBalance() {
     const app = getApp()
     const balance = app.globalData.userInfo?.balance || 0
     if (balance < 10000) {
@@ -102,7 +117,6 @@ Page({
       newFiles: []
     })
   },
-
   closeCreate() {
     this.setData({ showCreateModal: false })
   },
