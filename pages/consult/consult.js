@@ -102,7 +102,7 @@ Page({
     if (balance < 10000) {
       wx.showModal({
         title: '余额不足',
-        content: '发起咨询需要余额不低于100元，当前余额' + (balance/100).toFixed(2) + '元。请先充值。',
+        content: '发起咨询需要余额不低于100元，当前余额' + (balance/100).toFixed(2) + '元。请先到网页版充值。',
         success: res => {
           if (res.confirm) {
             wx.navigateTo({ url: '/pages/profile/profile' })
