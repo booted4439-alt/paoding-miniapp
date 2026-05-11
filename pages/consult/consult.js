@@ -149,8 +149,8 @@ Page({
   submitConsultation() {
     if (this.data.submitting) return
     const { newContent, newFiles } = this.data
-    if (!newContent.trim() && newFiles.length === 0) {
-      util.showError('请输入咨询内容或选择附件')
+    if (!newContent.trim()) {
+      util.showError('请输入你的问题')
       return
     }
 
