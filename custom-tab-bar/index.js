@@ -16,11 +16,6 @@ Component({
       iconPath: '/images/tab_consult.png',
       selectedIconPath: '/images/tab_consult_active.png'
     }, {
-      pagePath: '/pages/documents/documents',
-      text: '知识',
-      iconPath: '/images/tab_doc.png',
-      selectedIconPath: '/images/tab_doc_active.png'
-    }, {
       pagePath: '/pages/profile/profile',
       text: '我的',
       iconPath: '/images/tab_me.png',

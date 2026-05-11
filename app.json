@@ -5,8 +5,6 @@
     "pages/register/register",
     "pages/consult/consult",
     "pages/consult-detail/consult-detail",
-    "pages/documents/documents",
-    "pages/document-detail/document-detail",
     "pages/contact/contact",
     "pages/webview/webview",
     "pages/profile/profile"
@@ -35,12 +33,6 @@
         "text": "咨询",
         "iconPath": "images/tab_consult.png",
         "selectedIconPath": "images/tab_consult_active.png"
-      },
-      {
-        "pagePath": "pages/documents/documents",
-        "text": "知识",
-        "iconPath": "images/tab_doc.png",
-        "selectedIconPath": "images/tab_doc_active.png"
       },
       {
         "pagePath": "pages/profile/profile",

@@ -170,6 +170,7 @@
   padding: 16rpx 20rpx;
   font-size: 28rpx;
   line-height: 1.6;
+  margin-bottom: 10px;
 }
 
 .send-btn {

@@ -68,9 +68,6 @@ Page({
     }
   },
 
-  goDocuments() {
-    wx.switchTab({ url: '/pages/documents/documents' })
-  },
 
   goContact() {
     wx.navigateTo({ url: '/pages/contact/contact' })

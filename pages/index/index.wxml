@@ -20,14 +20,6 @@
       </view>
       <text class="quick-arrow">›</text>
     </view>
-    <view class="quick-row" bindtap="goDocuments">
-      <text class="quick-icon">📖</text>
-      <view class="quick-info">
-        <text class="quick-title">法律知识</text>
-        <text class="quick-desc">实用的法律知识、法律文档</text>
-      </view>
-      <text class="quick-arrow">›</text>
-    </view>
     <view class="quick-row" bindtap="goContact">
       <text class="quick-icon">📍</text>
       <view class="quick-info">
