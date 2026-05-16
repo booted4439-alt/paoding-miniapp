@@ -180,8 +180,12 @@ Page({
         wx.hideLoading()
         this.setData({ submitting: false })
         if (data.ok) {
-          util.showSuccess('绑定成功')
-          this.completeBindLogin(data.user)
+          if (data.token) {
+            // 合并到老账户的情况，用新 token
+            this.completeLogin(data.token, data.user)
+          } else {
+            this.completeBindLogin(data.user)
+          }
         } else {
           util.showError(data.error || '绑定失败')
         }
