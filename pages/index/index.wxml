@@ -4,7 +4,7 @@
   <view class="banner">
     <text class="banner-title">{{siteName}}</text>
     <text class="banner-subtitle">AI+律师审核</text>
-    <text class="banner-tip">用户提出咨询后，6小时内由专业律师回复。</text>
+    <text class="banner-tip">提供法律服务，用户提出咨询后，6小时内由专业律师回复。</text>
     <view class="banner-actions">
       <button class="banner-btn" bindtap="goConsult">立即咨询</button>
     </view>
