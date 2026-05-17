@@ -2,7 +2,7 @@
 <view class="login-container">
   <view class="login-header">
     <text class="login-title">欢迎登录</text>
-    <text class="login-subtitle">庖丁法律服务</text>
+    <text class="login-subtitle">演算法律</text>
   </view>
 
   <!-- 微信登录（默认显示） -->

@@ -55,7 +55,7 @@ Page({
     wx.openLocation({
       latitude: 31.2165,
       longitude: 121.4140,
-      name: '庖丁法律服务',
+      name: '演算法律',
       address: this.data.address
     })
   },

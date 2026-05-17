@@ -6,7 +6,7 @@ const util = require('../../utils/util')
 
 Page({
   data: {
-    siteName: '庖丁法律服务',
+    siteName: '演算法律',
     sitePhone: '021-6888-8888',
     siteAddress: '上海市浦东新区陆家嘴环路1000号',
     news: [],

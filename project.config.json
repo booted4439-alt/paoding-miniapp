@@ -1,5 +1,5 @@
 {
-  "description": "庖丁法律服务 - 微信小程序",
+  "description": "演算法律 - 微信小程序",
   "packOptions": {
     "ignore": [],
     "include": []
@@ -51,7 +51,7 @@
   "compileType": "miniprogram",
   "libVersion": "3.7.0",
   "appid": "wxb58b6fdacd9bf7af",
-  "projectname": "庖丁法律服务",
+  "projectname": "演算法律",
   "condition": {},
   "editorSetting": {
     "tabIndent": "insertSpaces",

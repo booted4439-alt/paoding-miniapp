@@ -2,7 +2,7 @@
 <view class="register-container">
   <view class="register-header">
     <text class="register-title">创建账号</text>
-    <text class="register-subtitle">注册庖丁法律服务账号</text>
+    <text class="register-subtitle">注册演算法律账号</text>
   </view>
 
   <view class="register-form">
