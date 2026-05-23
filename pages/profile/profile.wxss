@@ -28,7 +28,7 @@
 .avatar {
   width: 140rpx;
   height: 140rpx;
-  border-radius: 50%;
+  /* border-radius: 50%; */
   overflow: hidden;
   margin-bottom: 16rpx;
 }
