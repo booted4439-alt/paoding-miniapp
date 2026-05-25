@@ -132,9 +132,9 @@
 
         <view class="agreement-text">
           <text>绑定即代表已阅读并同意我们的 </text>
-          <text class="link" data-url="https://paodinglaw.com/terms" bindtap="openUrl">用户协议</text>
+          <text class="link" data-url="https://calculuslaw.com/terms" bindtap="openUrl">用户协议</text>
           <text> 与 </text>
-          <text class="link" data-url="https://paodinglaw.com/privacy" bindtap="openUrl">隐私政策</text>
+          <text class="link" data-url="https://calculuslaw.com/privacy" bindtap="openUrl">隐私政策</text>
         </view>
         <button
           class="btn-primary"

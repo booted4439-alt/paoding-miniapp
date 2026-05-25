@@ -8,7 +8,7 @@ Page({
     phone: '021-12368',
     address: '上海市长宁区',
     workHours: '周一至周日 6:00 - 22:00',
-    email: 'contact@paodinglaw.com',
+    email: 'contact@calculuslaw.com',
     wechatQr: ''
   },
 

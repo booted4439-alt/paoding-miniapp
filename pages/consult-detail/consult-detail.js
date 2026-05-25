@@ -247,7 +247,7 @@ Page({
           console.error('downloadFile fail', err)
           wx.showModal({
             title: '打开失败',
-            content: '请在微信后台「开发→开发设置→服务器域名」中添加 https://www.paodinglaw.com 到 downloadFile 白名单',
+            content: '请在微信后台「开发→开发设置→服务器域名」中添加 https://www.calculuslaw.com 到 downloadFile 白名单',
             showCancel: false
           })
         }
