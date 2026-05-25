@@ -3,7 +3,7 @@
   <!-- Banner -->
   <view class="banner">
     <text class="banner-title">{{siteName}}</text>
-    <image class="banner-logo" src="https://calculuslaw.com/static/logo.svg" mode="widthFix"></image>
+    <image class="banner-logo" src="https://calculuslaw.com/static/logo-white.svg" mode="widthFix"></image>
     <text class="banner-subtitle">AI+律师审核</text>
     <text class="banner-tip">提供法律服务，用户提出咨询后，6小时内由专业律师回复。</text>
     <view class="banner-actions">
