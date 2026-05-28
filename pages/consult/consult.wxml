@@ -34,7 +34,7 @@
 
   <!-- 固定底部按钮 -->
   <view class="bottom-bar safe-bottom">
-    <button class="btn-primary" style="margin:0;" bindtap="openCreate">发起新咨询</button>
+    <button class="btn-primary" style="margin:0;width:100%;" bindtap="openCreate">发起新咨询</button>
   </view>
 
   <!-- 创建咨询弹窗 -->

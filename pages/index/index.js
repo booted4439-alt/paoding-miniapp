@@ -3,6 +3,7 @@
  */
 const api = require('../../utils/api')
 const util = require('../../utils/util')
+const bgThemes = require('../../utils/bg-themes')
 
 Page({
   data: {
@@ -10,7 +11,9 @@ Page({
     sitePhone: '021-6888-8888',
     siteAddress: '上海市浦东新区陆家嘴环路1000号',
     news: [],
-    isLoggedIn: false
+    isLoggedIn: false,
+    // 风景背景
+    bgStyle: ''
   },
 
   onLoad() {
@@ -21,6 +24,15 @@ Page({
 
   onShow() {
     this.checkLoginStatus()
+    this.loadBgTheme()
+  },
+
+  /** 加载风景背景（跟随「我的」页面选择的主题） */
+  loadBgTheme() {
+    const saved = bgThemes.getSavedTheme()
+    this.setData({
+      bgStyle: 'background-image: url(\'' + bgThemes.getBgSrc(saved) + '\')'
+    })
   },
 
   checkLoginStatus() {

@@ -6,39 +6,85 @@
 
 /* Banner */
 .banner {
-  background: linear-gradient(135deg, #4d6bfe, #7c93ff);
-  padding: 160rpx 40rpx 180rpx;
+  position: relative;
+  background-size: cover;
+  background-position: center top;
+  background-repeat: no-repeat;
+  padding: 120rpx 40rpx 130rpx;
   display: flex;
   flex-direction: column;
   align-items: center;
+  overflow: hidden;
+}
+
+/* 深色渐变遮罩，确保任何背景下文字都清晰 */
+.banner-overlay {
+  position: absolute;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background: linear-gradient(to bottom, rgba(0,0,0,0.35) 0%, rgba(0,0,0,0.15) 50%, rgba(0,0,0,0.45) 100%);
+  pointer-events: none;
+  z-index: 0;
+}
+
+.banner-slogan {
+  display: inline-block;
+  padding: 8rpx 28rpx;
+  border-radius: 30rpx;
+  font-size: 28rpx;
+  color: rgba(255,255,255,0.9);
+  background: rgba(255,255,255,0.2);
+  margin-bottom: 50rpx;
+  letter-spacing: 4rpx;
+  position: relative;
+  z-index: 1;
+}
+
+.banner-title-row {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 30rpx;
+  position: relative;
+  z-index: 1;
 }
 
 .banner-logo {
-  width: 480rpx;
+  width: 200rpx;
   height: auto;
-  margin-bottom: 16rpx;
+  margin-right: 16rpx;
 }
 
 .banner-title {
   font-size: 50rpx;
   font-weight: 700;
   color: #ffffff;
-  margin-bottom: 10rpx;
+  background: linear-gradient(135deg, #f5e6d0, #e8d5b7 50%, #d4b896);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  text-shadow: 0 2rpx 20rpx rgba(0,0,0,0.3);
 }
 
 .banner-subtitle {
   font-size: 38rpx;
-  color: rgba(255, 255, 255, 0.8);
-  margin-bottom: 10rpx;
+  color: rgba(255,255,255,0.95);
+  margin-bottom: 70rpx;
+  position: relative;
+  z-index: 1;
+  text-shadow: 0 2rpx 12rpx rgba(0,0,0,0.25);
 }
 
 .banner-tip {
   font-size: 30rpx;
-  color: #e8b830;
+  color: rgba(255,255,255,0.85);
   margin-bottom: 40rpx;
   text-align: center;
   padding: 0 30rpx;
   line-height: 1.5;
+  position: relative;
+  z-index: 1;
+  text-shadow: 0 2rpx 10rpx rgba(0,0,0,0.2);
 }
 
 .banner-actions {

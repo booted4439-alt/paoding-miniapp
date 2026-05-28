@@ -10,6 +10,7 @@
     <view class="wx-login">
       <button
         class="wx-login-btn"
+        style="width: 50%;"
         bindtap="wechatLogin"
       >
         <!-- <text class="wx-icon">微信</text> -->

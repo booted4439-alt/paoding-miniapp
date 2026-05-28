@@ -1,20 +1,28 @@
 <!-- 个人中心 -->
 <view class="profile-page">
-  <!-- 未登录 -->
-  <view class="profile-header" wx:if="{{!isLoggedIn}}">
-    <view class="avatar-placeholder">
-      <text class="avatar-text">未登录</text>
-    </view>
-    <button class="login-btn" bindtap="goLogin">点击登录 / 注册</button>
-  </view>
 
-  <!-- 已登录 -->
-  <view class="profile-header logged-in" wx:else>
-    <view class="avatar">
-      <image class="avatar-img" src="/images/logo.png"></image>
+  <!-- 风景背景头部 -->
+  <view class="profile-header" style="{{bgStyle}}">
+    <!-- 底部渐变遮罩（让风景平滑过渡到内容） -->
+    <view class="header-mask"></view>
+
+    <!-- 未登录 -->
+    <view class="header-content" wx:if="{{!isLoggedIn}}">
+      <view class="avatar-placeholder">
+        <text class="avatar-text">法</text>
+      </view>
+      <button class="login-btn" bindtap="goLogin">点击登录 / 注册</button>
     </view>
-    <text class="user-name">{{userInfo.username || '用户'}}</text>
-    <text class="user-phone" wx:if="{{userInfo.phone}}">{{userInfo.phone}}</text>
+
+    <!-- 已登录 -->
+    <view class="header-content" wx:else>
+      <view class="avatar">
+        <image class="avatar-img" src="https://calculuslaw.com/static/apple-touch-icon.png"></image>
+      </view>
+      <text class="user-name">{{userInfo.username || '用户'}}</text>
+      <text class="user-phone" wx:if="{{userInfo.phone}}">{{userInfo.phone}}</text>
+      <text class="user-phone" wx:else>执业律师 · 民商事诉讼</text>
+    </view>
   </view>
 
   <!-- 数据统计 -->
@@ -27,6 +35,26 @@
     <view class="stat-item">
       <text class="stat-number">{{stats.active}}</text>
       <text class="stat-label">进行中</text>
+    </view>
+  </view>
+
+  <!-- 主题切换 -->
+  <view class="theme-section">
+    <view class="theme-section-header" bindtap="toggleThemePicker">
+      <text class="theme-section-icon">🎨</text>
+      <text class="theme-section-text">风景背景</text>
+      <text class="theme-current">{{currentThemeName}}</text>
+      <text class="theme-arrow {{themePickerOpen ? 'arrow-up' : ''}}">▾</text>
+    </view>
+    <view class="theme-grid {{themePickerOpen ? 'theme-grid-open' : ''}}">
+      <view class="theme-item {{currentTheme === item.key ? 'theme-item-active' : ''}}"
+            wx:for="{{themeList}}" wx:key="key"
+            data-theme="{{item.key}}"
+            bindtap="selectTheme">
+        <view class="theme-dot" style="background:{{item.color}}"></view>
+        <text class="theme-name">{{item.name}}</text>
+        <view class="theme-check" wx:if="{{currentTheme === item.key}}">✓</view>
+      </view>
     </view>
   </view>
 
