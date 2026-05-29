@@ -17,7 +17,7 @@
     <!-- 已登录 -->
     <view class="header-content" wx:else>
       <view class="avatar">
-        <image class="avatar-img" src="https://calculuslaw.com/static/apple-touch-icon.png"></image>
+        <image class="avatar-img" src="/images/avatar.png"></image>
       </view>
       <text class="user-name">{{userInfo.username || '用户'}}</text>
       <text class="user-phone" wx:if="{{userInfo.phone}}">{{userInfo.phone}}</text>
