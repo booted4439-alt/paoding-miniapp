@@ -24,7 +24,16 @@ Page({
     bindCodeBtnText: '获取验证码',
     bindCodeBtnDisabled: false,
     bindCountdown: 0,
-    isDevMode: false
+    isDevMode: false,
+    agreeWechat: false,
+    agreeBind: false
+  },
+
+  toggleAgreeWechat() {
+    this.setData({ agreeWechat: !this.data.agreeWechat })
+  },
+  toggleAgreeBind() {
+    this.setData({ agreeBind: !this.data.agreeBind })
   },
 
   /** 切换登录方式 */
@@ -119,6 +128,10 @@ Page({
 
   /** 微信一键登录 */
   wechatLogin() {
+    if (!this.data.agreeWechat) {
+      util.showError('请先阅读并同意用户协议和隐私政策')
+      return
+    }
     wx.showLoading({ title: '登录中...', mask: true })
     wx.login({
       success: res => {
@@ -155,6 +168,10 @@ Page({
   /** 提交绑定手机号 + 邮箱 */
   submitBindPhone() {
     if (this.data.submitting) return
+    if (!this.data.agreeBind) {
+      util.showError('请先阅读并同意用户协议和隐私政策')
+      return
+    }
     const phone = this.data.bindPhoneNum.trim()
     const smsCode = this.data.bindSmsCode.trim()
     const email = this.data.bindEmail.trim()

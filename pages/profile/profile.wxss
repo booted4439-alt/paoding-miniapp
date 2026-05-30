@@ -56,7 +56,7 @@
 }
 
 .avatar-text {
-  font-size: 48rpx;
+  font-size: 28rpx;
   color: #ffffff;
   font-weight: 700;
 }

@@ -16,7 +16,12 @@ Page({
     codeBtnText: '获取验证码',
     codeBtnDisabled: false,
     countdown: 0,
-    submitting: false
+    submitting: false,
+    agreeTerms: false
+  },
+
+  toggleAgree() {
+    this.setData({ agreeTerms: !this.data.agreeTerms })
   },
 
   onUsernameInput(e) { this.setData({ username: e.detail.value }) },
@@ -65,6 +70,7 @@ Page({
     if (this.data.submitting) return
     const { username, phone, password, confirmPassword, smsCode, email, agreeTerms } = this.data
 
+    if (!agreeTerms) { util.showError('请先阅读并同意用户协议和隐私政策'); return }
     if (!username.trim()) { util.showError('请输入用户名'); return }
     if (!util.isValidPhone(phone)) { util.showError('请输入正确的手机号码'); return }
     if (!smsCode) { util.showError('请输入验证码'); return }
