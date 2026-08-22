@@ -41,7 +41,12 @@ function request(url, options = {}) {
       },
       fail(err) {
         console.error('请求异常:', err)
-        reject(new Error('网络异常，请检查网络连接'))
+        // 阿里云短信验证等接口延迟波动大，超时是常见情况，给用户明确提示
+        if (err && (err.errMsg || '').indexOf('timeout') >= 0) {
+          reject(new Error('请求超时，服务器可能仍在处理，请稍后刷新查看结果'))
+        } else {
+          reject(new Error('网络异常，请检查网络连接'))
+        }
       }
     })
   })
@@ -71,7 +76,8 @@ function wechatLogin(code, nickname) {
 function bindPhone(encryptedData, iv) {
   return request('/api/wechat/bind-phone', {
     method: 'POST',
-    data: { encryptedData, iv }
+    data: { encryptedData, iv },
+    timeout: 30000
   })
 }
 
@@ -97,7 +103,8 @@ function bindPhoneWithSms(phone, smsCode, email) {
   }
   return request('/api/wechat/bind-phone', {
     method: 'POST',
-    data
+    data,
+    timeout: 30000  // 阿里云短信验证延迟波动大，放宽到30秒
   })
 }
 
@@ -107,7 +114,8 @@ function bindPhoneWithSms(phone, smsCode, email) {
 function sendSmsCode(phone) {
   return request('/api/sms/send', {
     method: 'POST',
-    data: { phone }
+    data: { phone },
+    timeout: 20000  // 阿里云短信接口延迟波动大
   })
 }
 
@@ -117,7 +125,8 @@ function sendSmsCode(phone) {
 function verifySmsCode(phone, code) {
   return request('/api/sms/verify', {
     method: 'POST',
-    data: { phone, code }
+    data: { phone, code },
+    timeout: 20000  // 阿里云短信验证延迟波动大
   })
 }
 
