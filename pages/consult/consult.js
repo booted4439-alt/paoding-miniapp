@@ -95,14 +95,15 @@ Page({
     })
   },
 
-  /** 检查余额是否 >= 100元 */
+  /** 检查余额是否 >= 单价（元） */
   _checkBalance() {
     const app = getApp()
     const balance = app.globalData.userInfo?.balance || 0
-    if (balance < 10000) {
+    const unitPrice = app.globalData.userInfo?.unit_price || 10000
+    if (balance < unitPrice) {
       wx.showModal({
         title: '余额不足',
-        content: '发起咨询需要余额不低于100元，当前余额' + (balance/100).toFixed(2) + '元。请先到网页版充值。',
+        content: '发起咨询需要余额不低于' + (unitPrice/100).toFixed(0) + '元，当前余额' + (balance/100).toFixed(2) + '元。请先到网页版充值。',
         success: res => {
           if (res.confirm) {
             wx.navigateTo({ url: '/pages/profile/profile' })
