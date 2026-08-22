@@ -16,10 +16,12 @@ Page({
     countdown: 0,
     submitting: false,
 
-    // 微信登录 → 绑定手机号 + 邮箱
+    // 微信登录 → 绑定手机号 + 密码 + 邮箱
     showBindPhone: false,
     bindPhoneNum: '',
     bindSmsCode: '',
+    bindPassword: '',
+    bindConfirmPassword: '',
     bindEmail: '',
     bindCodeBtnText: '获取验证码',
     bindCodeBtnDisabled: false,
@@ -52,6 +54,8 @@ Page({
   onSmsCodeInput(e) { this.setData({ smsCode: e.detail.value }) },
   onBindPhoneInput(e) { this.setData({ bindPhoneNum: e.detail.value }) },
   onBindSmsCodeInput(e) { this.setData({ bindSmsCode: e.detail.value }) },
+  onBindPasswordInput(e) { this.setData({ bindPassword: e.detail.value }) },
+  onBindConfirmPasswordInput(e) { this.setData({ bindConfirmPassword: e.detail.value }) },
   onBindEmailInput(e) { this.setData({ bindEmail: e.detail.value }) },
 
   /** 如果从其他页面跳过来要求强制绑定 */
@@ -175,6 +179,8 @@ Page({
     const phone = this.data.bindPhoneNum.trim()
     const smsCode = this.data.bindSmsCode.trim()
     const email = this.data.bindEmail.trim()
+    const password = this.data.bindPassword
+    const confirmPassword = this.data.bindConfirmPassword
 
     if (!util.isValidPhone(phone)) {
       util.showError('请输入正确的手机号码')
@@ -184,6 +190,26 @@ Page({
       util.showError('请输入短信验证码')
       return
     }
+    // 密码校验（同注册页：必填、至少6位、只能字母和数字、两次一致）
+    if (!password) {
+      util.showError('请输入密码')
+      return
+    }
+    if (password.length < 6) {
+      util.showError('密码至少6位')
+      return
+    }
+    if (password !== confirmPassword) {
+      util.showError('两次密码不一致')
+      return
+    }
+    for (var _i = 0; _i < password.length; _i++) {
+      var _ch = password.charAt(_i);
+      if (!((_ch >= 'a' && _ch <= 'z') || (_ch >= 'A' && _ch <= 'Z') || (_ch >= '0' && _ch <= '9'))) {
+        util.showError('密码只能包含字母和数字');
+        return;
+      }
+    }
     if (email && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
       util.showError('邮箱格式不正确')
       return
@@ -192,7 +218,7 @@ Page({
     this.setData({ submitting: true })
     wx.showLoading({ title: '绑定中...', mask: true })
 
-    api.bindPhoneWithSms(phone, smsCode, email)
+    api.bindPhoneWithSms(phone, smsCode, email, password)
       .then(data => {
         wx.hideLoading()
         this.setData({ submitting: false })

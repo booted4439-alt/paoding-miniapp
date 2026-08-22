@@ -93,13 +93,16 @@ function bindPhoneDirect(phone) {
 }
 
 /**
- * 绑定手机号（短信验证码 + 可选邮箱）
+ * 绑定手机号（短信验证码 + 设置登录密码 + 可选邮箱）
  * POST /api/wechat/bind-phone
  */
-function bindPhoneWithSms(phone, smsCode, email) {
+function bindPhoneWithSms(phone, smsCode, email, password) {
   const data = { phone, sms_code: smsCode }
   if (email) {
     data.email = email
+  }
+  if (password) {
+    data.password = password
   }
   return request('/api/wechat/bind-phone', {
     method: 'POST',

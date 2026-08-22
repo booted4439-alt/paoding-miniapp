@@ -92,8 +92,8 @@
   <!-- 微信首次登录 → 绑定手机号 -->
   <block wx:if="{{showBindPhone}}">
     <view class="bind-phone-container">
-      <text class="bind-phone-title">请绑定手机号及邮箱</text>
-      <text class="bind-phone-desc">绑定后可使用更多服务，邮箱选填</text>
+      <text class="bind-phone-title">请绑定手机号并设置密码</text>
+      <text class="bind-phone-desc">绑定后可使用更多服务，请设置登录密码（用于网页端登录），邮箱选填</text>
 
       <view class="login-form">
         <!-- 手机号 -->
@@ -124,6 +124,28 @@
               bindtap="sendBindCode"
             >{{bindCodeBtnText}}</view>
           </view>
+        </view>
+
+        <!-- 密码 -->
+        <view class="input-group">
+          <input
+            class="input-field"
+            type="password"
+            placeholder="请输入密码（至少6位，只能包含字母和数字）"
+            value="{{bindPassword}}"
+            bindinput="onBindPasswordInput"
+          />
+        </view>
+
+        <!-- 确认密码 -->
+        <view class="input-group">
+          <input
+            class="input-field"
+            type="password"
+            placeholder="请确认密码"
+            value="{{bindConfirmPassword}}"
+            bindinput="onBindConfirmPasswordInput"
+          />
         </view>
 
         <!-- 邮箱（选填） -->
