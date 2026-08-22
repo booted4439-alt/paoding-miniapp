@@ -7,7 +7,7 @@ Page({
   data: {
     phone: '021-12368',
     address: '上海市长宁区',
-    workHours: '周一至周日 6:00 - 22:00',
+    workHours: '周一至周日 8:00 - 18:00',
     email: 'contact@calculuslaw.com',
     wechatQr: ''
   },

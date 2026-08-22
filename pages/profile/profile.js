@@ -64,7 +64,7 @@ Page({
     const item = list.find(t => t.key === saved)
     this.setData({
       currentTheme: saved,
-      currentThemeName: item ? item.name : '日落霞光',
+      currentThemeName: item ? item.name : '极光之巅',
       bgStyle: makeBgStyle(saved)
     })
   },

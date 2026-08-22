@@ -24,7 +24,7 @@ const themes = {
  */
 function getBgSrc(name) {
   const t = themes[name]
-  return 'data:image/svg+xml;base64,' + (t ? t.b64 : themes.sunset.b64)
+  return 'data:image/svg+xml;base64,' + (t ? t.b64 : themes.aurora.b64)
 }
 
 /**
@@ -36,10 +36,10 @@ function getThemeList() {
 }
 
 /**
- * 获取当前保存的主题
+ * 获取当前保存的主题（默认极光之巅）
  */
 function getSavedTheme() {
-  try { return wx.getStorageSync('profile_bg_theme') || 'sunset' } catch(e) { return 'sunset' }
+  try { return wx.getStorageSync('profile_bg_theme') || 'aurora' } catch(e) { return 'aurora' }
 }
 
 /**

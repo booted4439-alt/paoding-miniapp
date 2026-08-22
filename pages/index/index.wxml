@@ -9,7 +9,7 @@
     </view>
     <text class="banner-slogan">精准计算 · 法律服务</text>
     <text class="banner-subtitle">AI+律师审核</text>
-    <text class="banner-tip">用户提出咨询后，6小时内由专业律师回复。</text>
+    <text class="banner-tip">用户提出咨询后，3小时内由专业律师回复。</text>
     <view class="banner-actions">
       <button class="banner-btn" bindtap="goConsult">立即咨询</button>
     </view>
@@ -44,6 +44,6 @@
   <!-- 工作时间 -->
   <view class="work-hours-bar">
     <text class="work-hours-icon">🕐</text>
-    <text class="work-hours-text">律师工作时间：周一至周日 6:00 - 22:00</text>
+    <text class="work-hours-text">律师工作时间：周一至周日 8:00 - 18:00</text>
   </view>
 </view>
