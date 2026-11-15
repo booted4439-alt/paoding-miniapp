@@ -9,11 +9,6 @@ Page({
   data: {
     phone: '',
     password: '',
-    smsCode: '',
-    loginMode: 'password', // 'password' | 'sms'
-    codeBtnText: '获取验证码',
-    codeBtnDisabled: false,
-    countdown: 0,
     submitting: false,
 
     // 微信登录 → 绑定手机号 + 密码 + 邮箱
@@ -38,20 +33,9 @@ Page({
     this.setData({ agreeBind: !this.data.agreeBind })
   },
 
-  /** 切换登录方式 */
-  switchMode() {
-    this.setData({
-      loginMode: this.data.loginMode === 'password' ? 'sms' : 'password',
-      smsCode: '',
-      codeBtnText: '获取验证码',
-      codeBtnDisabled: false
-    })
-  },
-
   /** 输入事件 */
   onPhoneInput(e) { this.setData({ phone: e.detail.value }) },
   onPasswordInput(e) { this.setData({ password: e.detail.value }) },
-  onSmsCodeInput(e) { this.setData({ smsCode: e.detail.value }) },
   onBindPhoneInput(e) { this.setData({ bindPhoneNum: e.detail.value }) },
   onBindSmsCodeInput(e) { this.setData({ bindSmsCode: e.detail.value }) },
   onBindPasswordInput(e) { this.setData({ bindPassword: e.detail.value }) },
@@ -75,25 +59,6 @@ Page({
         }
       })
     }
-  },
-
-  /** ---- 登录页验证码 ---- */
-  sendCode() {
-    if (this.data.codeBtnDisabled) return
-    if (!util.isValidPhone(this.data.phone)) {
-      util.showError('请输入正确的手机号码')
-      return
-    }
-    this.setData({ codeBtnDisabled: true })
-    api.sendSmsCode(this.data.phone)
-      .then(() => {
-        util.showSuccess('验证码已发送')
-        this._startCountdown('countdown', 'codeBtnText', 'codeBtnDisabled')
-      })
-      .catch(err => {
-        this.setData({ codeBtnDisabled: false })
-        util.showError(err.message || '发送失败')
-      })
   },
 
   /** ---- 绑定页验证码 ---- */
@@ -263,57 +228,38 @@ Page({
     }
   },
 
-  /** 手机号+密码/验证码登录 */
+  /** 手机号 + 密码登录（仅密码登录） */
   submitLogin() {
     if (this.data.submitting) return
-    const { phone, password, smsCode, loginMode } = this.data
+    const { phone, password } = this.data
 
     if (!util.isValidPhone(phone)) {
       util.showError('请输入正确的手机号码')
       return
     }
-    if (loginMode === 'password' && !password) {
+    if (!password) {
       util.showError('请输入密码')
-      return
-    }
-    if (loginMode === 'sms' && !smsCode) {
-      util.showError('请输入验证码')
       return
     }
 
     this.setData({ submitting: true })
     wx.showLoading({ title: '登录中...', mask: true })
 
-    const doLogin = () => {
-      const pwd = loginMode === 'sms' ? smsCode : password
-      api.login(phone, pwd)
-        .then(data => {
-          wx.hideLoading()
-          this.setData({ submitting: false })
-          if (data.token) {
-            app.setLogin(data.token, data.user || {})
-            util.showSuccess('登录成功')
-            this._goBack()
-          }
-        })
-        .catch(err => {
-          wx.hideLoading()
-          this.setData({ submitting: false })
-          util.showError(err.message || '登录失败')
-        })
-    }
-
-    if (loginMode === 'sms') {
-      api.verifySmsCode(phone, smsCode)
-        .then(() => doLogin())
-        .catch(err => {
-          wx.hideLoading()
-          this.setData({ submitting: false })
-          util.showError(err.message || '验证码错误')
-        })
-    } else {
-      doLogin()
-    }
+    api.login(phone, password)
+      .then(data => {
+        wx.hideLoading()
+        this.setData({ submitting: false })
+        if (data.token) {
+          app.setLogin(data.token, data.user || {})
+          util.showSuccess('登录成功')
+          this._goBack()
+        }
+      })
+      .catch(err => {
+        wx.hideLoading()
+        this.setData({ submitting: false })
+        util.showError(err.message || '登录失败')
+      })
   },
 
   /** 打开外部链接 */
@@ -327,8 +273,6 @@ Page({
   },
 
   onUnload() {
-    ;['_countdownTimer', '_bindCountdownTimer'].forEach(k => {
-      if (this[k]) { clearInterval(this[k]) }
-    })
+    if (this['_bindCountdownTimer']) { clearInterval(this['_bindCountdownTimer']) }
   }
 })

@@ -28,23 +28,6 @@
     </view>
 
     <view class="input-group">
-      <view class="input-row">
-        <input
-          class="input-field"
-          type="text"
-          placeholder="请输入速通互联验证码"
-          maxlength="6"
-          value="{{smsCode}}"
-          bindinput="onSmsCodeInput"
-        />
-        <view
-          class="code-btn {{codeBtnDisabled ? 'disabled' : ''}}"
-          bindtap="sendCode"
-        >{{codeBtnText}}</view>
-      </view>
-    </view>
-
-    <view class="input-group">
       <input
         class="input-field"
         type="password"

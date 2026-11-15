@@ -43,38 +43,15 @@
         />
       </view>
 
-      <block wx:if="{{loginMode === 'password'}}">
-        <view class="input-group">
-          <input
-            class="input-field"
-            type="password"
-            placeholder="请输入密码"
-            value="{{password}}"
-            bindinput="onPasswordInput"
-          />
-        </view>
-        <view class="switch-mode" bindtap="switchMode">使用验证码登录</view>
-      </block>
-
-      <block wx:else>
-        <view class="input-group">
-          <view class="input-row">
-            <input
-              class="input-field"
-              type="text"
-              placeholder="请输入速通互联验证码"
-              maxlength="6"
-              value="{{smsCode}}"
-              bindinput="onSmsCodeInput"
-            />
-            <view
-              class="code-btn {{codeBtnDisabled ? 'disabled' : ''}}"
-              bindtap="sendCode"
-            >{{codeBtnText}}</view>
-          </view>
-        </view>
-        <view class="switch-mode" bindtap="switchMode">使用密码登录</view>
-      </block>
+      <view class="input-group">
+        <input
+          class="input-field"
+          type="password"
+          placeholder="请输入密码"
+          value="{{password}}"
+          bindinput="onPasswordInput"
+        />
+      </view>
 
       <button
         class="btn-primary"
