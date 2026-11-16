@@ -36,7 +36,10 @@ function request(url, options = {}) {
         if (res.statusCode >= 200 && res.statusCode < 300) {
           resolve(res.data)
         } else {
-          reject(new Error(res.data?.error || res.data?.message || '请求失败'))
+          const err = new Error(res.data?.error || res.data?.message || '请求失败')
+          err.statusCode = res.statusCode
+          err.data = res.data
+          reject(err)
         }
       },
       fail(err) {
@@ -95,14 +98,21 @@ function bindPhoneDirect(phone) {
 /**
  * 绑定手机号（手机号 + 设置登录密码 + 可选邮箱，无需短信验证码）
  * POST /api/wechat/bind-phone
+ * @param {string} phone
+ * @param {string} [email]
+ * @param {string} password - 新登录密码
+ * @param {string} [existingPassword] - 手机号已属于其他账户时，需提供该账户原密码以合并
  */
-function bindPhoneWithPassword(phone, email, password) {
+function bindPhoneWithPassword(phone, email, password, existingPassword) {
   const data = { phone }
   if (email) {
     data.email = email
   }
   if (password) {
     data.password = password
+  }
+  if (existingPassword) {
+    data.existing_password = existingPassword
   }
   return request('/api/wechat/bind-phone', {
     method: 'POST',

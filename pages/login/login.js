@@ -136,10 +136,19 @@ Page({
       return
     }
 
+    this._doBind('')
+  },
+
+  /** 执行绑定；existingPassword 用于手机号已注册时合并到原账户 */
+  _doBind(existingPassword) {
+    const phone = this.data.bindPhoneNum.trim()
+    const email = this.data.bindEmail.trim()
+    const password = this.data.bindPassword
+
     this.setData({ submitting: true })
     wx.showLoading({ title: '绑定中...', mask: true })
 
-    api.bindPhoneWithPassword(phone, email, password)
+    api.bindPhoneWithPassword(phone, email, password, existingPassword)
       .then(data => {
         wx.hideLoading()
         this.setData({ submitting: false })
@@ -157,8 +166,34 @@ Page({
       .catch(err => {
         wx.hideLoading()
         this.setData({ submitting: false })
+        const d = err.data || {}
+        if (err.statusCode === 409 && d.need_existing_password) {
+          this._askExistingPassword(d.error)
+          return
+        }
         util.showError(err.message || '绑定失败')
       })
+  },
+
+  /** 手机号已注册 → 输入该账户原密码后合并 */
+  _askExistingPassword(hint) {
+    wx.showModal({
+      title: '该手机号已注册',
+      content: hint || '',
+      editable: true,
+      placeholderText: '请输入该账户原密码',
+      confirmText: '合并并登录',
+      cancelText: '取消',
+      success: res => {
+        if (!res.confirm) return
+        const pwd = (res.content || '').trim()
+        if (!pwd) {
+          util.showError('请输入该账户原密码')
+          return
+        }
+        this._doBind(pwd)
+      }
+    })
   },
 
   /** 完成登录后跳转 */
