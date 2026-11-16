@@ -93,11 +93,11 @@ function bindPhoneDirect(phone) {
 }
 
 /**
- * 绑定手机号（短信验证码 + 设置登录密码 + 可选邮箱）
+ * 绑定手机号（手机号 + 设置登录密码 + 可选邮箱，无需短信验证码）
  * POST /api/wechat/bind-phone
  */
-function bindPhoneWithSms(phone, smsCode, email, password) {
-  const data = { phone, sms_code: smsCode }
+function bindPhoneWithPassword(phone, email, password) {
+  const data = { phone }
   if (email) {
     data.email = email
   }
@@ -107,7 +107,7 @@ function bindPhoneWithSms(phone, smsCode, email, password) {
   return request('/api/wechat/bind-phone', {
     method: 'POST',
     data,
-    timeout: 30000  // 阿里云短信验证延迟波动大，放宽到30秒
+    timeout: 30000
   })
 }
 
@@ -321,7 +321,7 @@ module.exports = {
   wechatLogin,
   bindPhone,
   bindPhoneDirect,
-  bindPhoneWithSms,
+  bindPhoneWithPassword,
   sendSmsCode,
   verifySmsCode,
   login,

@@ -14,13 +14,9 @@ Page({
     // 微信登录 → 绑定手机号 + 密码 + 邮箱
     showBindPhone: false,
     bindPhoneNum: '',
-    bindSmsCode: '',
     bindPassword: '',
     bindConfirmPassword: '',
     bindEmail: '',
-    bindCodeBtnText: '获取验证码',
-    bindCodeBtnDisabled: false,
-    bindCountdown: 0,
     isDevMode: false,
     agreeWechat: false,
     agreeBind: false
@@ -37,7 +33,6 @@ Page({
   onPhoneInput(e) { this.setData({ phone: e.detail.value }) },
   onPasswordInput(e) { this.setData({ password: e.detail.value }) },
   onBindPhoneInput(e) { this.setData({ bindPhoneNum: e.detail.value }) },
-  onBindSmsCodeInput(e) { this.setData({ bindSmsCode: e.detail.value }) },
   onBindPasswordInput(e) { this.setData({ bindPassword: e.detail.value }) },
   onBindConfirmPasswordInput(e) { this.setData({ bindConfirmPassword: e.detail.value }) },
   onBindEmailInput(e) { this.setData({ bindEmail: e.detail.value }) },
@@ -59,40 +54,6 @@ Page({
         }
       })
     }
-  },
-
-  /** ---- 绑定页验证码 ---- */
-  sendBindCode() {
-    if (this.data.bindCodeBtnDisabled) return
-    if (!util.isValidPhone(this.data.bindPhoneNum)) {
-      util.showError('请输入正确的手机号码')
-      return
-    }
-    this.setData({ bindCodeBtnDisabled: true })
-    api.sendSmsCode(this.data.bindPhoneNum)
-      .then(() => {
-        util.showSuccess('验证码已发送')
-        this._startCountdown('bindCountdown', 'bindCodeBtnText', 'bindCodeBtnDisabled')
-      })
-      .catch(err => {
-        this.setData({ bindCodeBtnDisabled: false })
-        util.showError(err.message || '发送失败')
-      })
-  },
-
-  /** 倒计时 */
-  _startCountdown(countField, textField, disabledField) {
-    this.setData({ [countField]: 60, [textField]: '60s' })
-    const timer = setInterval(() => {
-      let c = this.data[countField] - 1
-      if (c <= 0) {
-        clearInterval(timer)
-        this.setData({ [countField]: 0, [textField]: '重新获取', [disabledField]: false })
-      } else {
-        this.setData({ [countField]: c, [textField]: `${c}s` })
-      }
-    }, 1000)
-    this[`_${countField}Timer`] = timer
   },
 
   /** 微信一键登录 */
@@ -142,17 +103,12 @@ Page({
       return
     }
     const phone = this.data.bindPhoneNum.trim()
-    const smsCode = this.data.bindSmsCode.trim()
     const email = this.data.bindEmail.trim()
     const password = this.data.bindPassword
     const confirmPassword = this.data.bindConfirmPassword
 
     if (!util.isValidPhone(phone)) {
       util.showError('请输入正确的手机号码')
-      return
-    }
-    if (!smsCode) {
-      util.showError('请输入短信验证码')
       return
     }
     // 密码校验（同注册页：必填、至少6位、只能字母和数字、两次一致）
@@ -183,7 +139,7 @@ Page({
     this.setData({ submitting: true })
     wx.showLoading({ title: '绑定中...', mask: true })
 
-    api.bindPhoneWithSms(phone, smsCode, email, password)
+    api.bindPhoneWithPassword(phone, email, password)
       .then(data => {
         wx.hideLoading()
         this.setData({ submitting: false })
@@ -270,9 +226,5 @@ Page({
 
   goRegister() {
     wx.navigateTo({ url: '/pages/register/register' })
-  },
-
-  onUnload() {
-    if (this['_bindCountdownTimer']) { clearInterval(this['_bindCountdownTimer']) }
   }
 })
