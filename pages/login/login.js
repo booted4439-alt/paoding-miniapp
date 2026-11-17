@@ -165,7 +165,7 @@ Page({
         this.setData({ submitting: false })
         const d = err.data || {}
         console.log('[bind] error', err.statusCode, d)
-        if (err.statusCode === 409 && d.need_existing_password) {
+        if (err.statusCode === 409 || d.need_existing_password) {
           // 延迟弹窗：避免与 Loading/Toast 的原生调用竞争导致 showModal 不显示
           setTimeout(() => this._askExistingPassword(d.error), 120)
           return
