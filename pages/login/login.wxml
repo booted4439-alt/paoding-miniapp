@@ -138,7 +138,6 @@
   <view wx:if="{{mergeModalShow}}" class="merge-mask" catchtap="cancelMerge" catchtouchmove="noop">
     <view class="merge-dialog" catchtap="noop">
       <text class="merge-title">该手机号已注册</text>
-      <text class="merge-hint">{{mergeHint}}</text>
       <input
         class="input-field merge-input"
         type="password"

@@ -23,7 +23,6 @@ Page({
 
     // 手机号已注册 → 合并确认弹层（自定义，避免 showModal 文案限制）
     mergeModalShow: false,
-    mergeHint: '',
     mergePwd: ''
   },
 
@@ -194,10 +193,9 @@ Page({
   },
 
   /** 手机号已注册 → 输入该账户原密码后合并 */
-  _askExistingPassword(hint) {
+  _askExistingPassword() {
     this.setData({
       mergeModalShow: true,
-      mergeHint: hint || '该手机号已注册，请输入该账户原密码后合并',
       mergePwd: ''
     })
   },
