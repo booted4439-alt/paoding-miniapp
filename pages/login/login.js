@@ -181,7 +181,7 @@ Page({
       content: hint || '请输入该账户原密码后合并',
       editable: true,
       placeholderText: '请输入该账户原密码',
-      confirmText: '合并并登录',
+      confirmText: '合并登录',
       cancelText: '取消',
       success: res => {
         if (!res.confirm) return
