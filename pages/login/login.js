@@ -19,7 +19,12 @@ Page({
     bindEmail: '',
     isDevMode: false,
     agreeWechat: false,
-    agreeBind: false
+    agreeBind: false,
+
+    // 手机号已注册 → 合并确认弹层（自定义，避免 showModal 文案限制）
+    mergeModalShow: false,
+    mergeHint: '',
+    mergePwd: ''
   },
 
   toggleAgreeWechat() {
@@ -36,6 +41,20 @@ Page({
   onBindPasswordInput(e) { this.setData({ bindPassword: e.detail.value }) },
   onBindConfirmPasswordInput(e) { this.setData({ bindConfirmPassword: e.detail.value }) },
   onBindEmailInput(e) { this.setData({ bindEmail: e.detail.value }) },
+
+  /** 合并弹层 */
+  noop() {},
+  onMergePwdInput(e) { this.setData({ mergePwd: e.detail.value }) },
+  cancelMerge() { this.setData({ mergeModalShow: false, mergePwd: '' }) },
+  confirmMerge() {
+    const pwd = (this.data.mergePwd || '').trim()
+    if (!pwd) {
+      util.showError('请输入该账户原密码')
+      return
+    }
+    this.setData({ mergeModalShow: false })
+    this._doBind(pwd)
+  },
 
   /** 如果从其他页面跳过来要求强制绑定 */
   onLoad(options) {
@@ -176,26 +195,10 @@ Page({
 
   /** 手机号已注册 → 输入该账户原密码后合并 */
   _askExistingPassword(hint) {
-    wx.showModal({
-      title: '该手机号已注册',
-      content: hint || '请输入该账户原密码后合并',
-      editable: true,
-      placeholderText: '请输入该账户原密码',
-      confirmText: '合并登录',
-      cancelText: '取消',
-      success: res => {
-        if (!res.confirm) return
-        const pwd = (res.content || '').trim()
-        if (!pwd) {
-          util.showError('请输入该账户原密码')
-          return
-        }
-        this._doBind(pwd)
-      },
-      fail: err => {
-        console.error('[bind] showModal fail', err)
-        util.showError(hint || '该手机号已注册，请返回用手机号+密码登录')
-      }
+    this.setData({
+      mergeModalShow: true,
+      mergeHint: hint || '该手机号已注册，请输入该账户原密码后合并',
+      mergePwd: ''
     })
   },
 

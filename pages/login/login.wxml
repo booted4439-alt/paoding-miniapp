@@ -133,4 +133,25 @@
       </view>
     </view>
   </block>
+
+  <!-- 手机号已注册 → 输入原密码合并 -->
+  <view wx:if="{{mergeModalShow}}" class="merge-mask" catchtap="cancelMerge" catchtouchmove="noop">
+    <view class="merge-dialog" catchtap="noop">
+      <text class="merge-title">该手机号已注册</text>
+      <text class="merge-hint">{{mergeHint}}</text>
+      <input
+        class="input-field merge-input"
+        type="password"
+        placeholder="请输入该账户原密码"
+        value="{{mergePwd}}"
+        focus="{{mergeModalShow}}"
+        bindinput="onMergePwdInput"
+        confirm-type="done"
+      />
+      <view class="merge-actions">
+        <button class="merge-btn merge-btn-cancel" bindtap="cancelMerge">取消</button>
+        <button class="merge-btn merge-btn-ok" bindtap="confirmMerge">合并登录</button>
+      </view>
+    </view>
+  </view>
 </view>
