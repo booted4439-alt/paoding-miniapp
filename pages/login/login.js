@@ -146,11 +146,9 @@ Page({
     const password = this.data.bindPassword
 
     this.setData({ submitting: true })
-    wx.showLoading({ title: '绑定中...', mask: true })
 
     api.bindPhoneWithPassword(phone, email, password, existingPassword)
       .then(data => {
-        wx.hideLoading()
         this.setData({ submitting: false })
         if (data.ok) {
           if (data.token) {
@@ -164,11 +162,12 @@ Page({
         }
       })
       .catch(err => {
-        wx.hideLoading()
         this.setData({ submitting: false })
         const d = err.data || {}
+        console.log('[bind] error', err.statusCode, d)
         if (err.statusCode === 409 && d.need_existing_password) {
-          this._askExistingPassword(d.error)
+          // 延迟弹窗：避免与 Loading/Toast 的原生调用竞争导致 showModal 不显示
+          setTimeout(() => this._askExistingPassword(d.error), 120)
           return
         }
         util.showError(err.message || '绑定失败')
@@ -179,7 +178,7 @@ Page({
   _askExistingPassword(hint) {
     wx.showModal({
       title: '该手机号已注册',
-      content: hint || '',
+      content: hint || '请输入该账户原密码后合并',
       editable: true,
       placeholderText: '请输入该账户原密码',
       confirmText: '合并并登录',
@@ -192,6 +191,10 @@ Page({
           return
         }
         this._doBind(pwd)
+      },
+      fail: err => {
+        console.error('[bind] showModal fail', err)
+        util.showError(hint || '该手机号已注册，请返回用手机号+密码登录')
       }
     })
   },
